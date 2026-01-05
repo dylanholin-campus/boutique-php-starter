@@ -1,0 +1,3 @@
+- Installation terminée
+- Stack : Nginx + PHP-FPM + MariaDB
+- Projet starter fonctionnel
