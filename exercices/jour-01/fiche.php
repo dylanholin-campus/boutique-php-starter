@@ -1,7 +1,7 @@
 <?php
 $name  = "Chaussures Nike Air Max";
 $price = 99.99;
-$stock = 3; // mets 0 pour tester "Rupture"
+$stock = 3;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
