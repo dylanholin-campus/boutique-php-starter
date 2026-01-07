@@ -14,17 +14,14 @@ $products = [
 
 foreach ($products as $product) {
 
-    // 1) Sauter ceux qui n'ont plus de stock
     if ($product["stock"] === 0) {
         continue;
     }
 
-    // 2) Stopper dès qu'on trouve un produit > 100€
     if ($product["price"] > 100) {
         break;
     }
 
-    // 3) Afficher uniquement en stock et < 100€
     echo htmlspecialchars($product["name"]) .
         " - prix " . htmlspecialchars((string)$product["price"]) . " €" .
         " - stock " . htmlspecialchars((string)$product["stock"]) .
