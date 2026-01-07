@@ -43,6 +43,7 @@ $products = [
             <p>Prix : <?= htmlspecialchars((string)$product["price"]) ?> €</p>
             <p>Stock : <?= htmlspecialchars((string)$product["stock"]) ?></p>
         </article>
+        <br>
     <?php endforeach; ?>
 </body>
 
