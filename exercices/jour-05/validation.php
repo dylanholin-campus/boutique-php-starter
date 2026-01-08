@@ -17,7 +17,6 @@ function isNew(string $dateAdded): bool
 {
     $daysSince = (time() - strtotime($dateAdded)) / 86400;
     echo "<br>$daysSince<br>";
-    echo "<br>$dateAdded<br>";
     return $daysSince < 30 && $daysSince >= 0;
 }
 
