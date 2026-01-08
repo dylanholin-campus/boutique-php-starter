@@ -19,18 +19,18 @@ function displayPrice(float $price, float $discount = 0, string $currency = "€
 function displayStock(int $quantity): string
 {
     if ($quantity === 0) {
-        return '<span style="color:#c0392b;">Rupture</span>';
+        return '<span style="color:red;">Rupture</span>';
     }
     if ($quantity < 5) {
         return '<span style="color:orange;">Stock limité (' . $quantity . ')</span>';
     }
-    return '<span style="color:#2ecc71;">En stock</span>';
+    return '<span style="color:green;">En stock</span>';
 }
 
 // Exemple produit
 $product = [
     "name" => "T-shirt",
-    "stock" => 3,
+    "stock" => 10,
     "price" => 29.99,
     "discount" => 20
 ];
@@ -52,7 +52,7 @@ $product = [
     <p>Prix : <?= displayPrice($product['price'], $product['discount']) ?></p>
     <p>Stock : <?= displayStock($product['stock']) ?></p>
 
-    <p><?= displayBadge("Nouveau", "#3498db") ?></p>
+    <p><?= displayBadge("Je sais pas quoi mettre ici", "#3498db") ?></p>
 </body>
 
 </html>
