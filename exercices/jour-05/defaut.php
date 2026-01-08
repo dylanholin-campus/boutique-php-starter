@@ -1,7 +1,7 @@
 <?php
 function formatPrice(float $amount, string $currency = "€", int $decimals = 2): string
 {
-    $formatted = number_format($amount, $decimals, '.', '');
+    $formatted = number_format($amount, $decimals);
     return $formatted . $currency;
 }
 
