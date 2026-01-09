@@ -45,6 +45,7 @@ $remise = 10.0;
             <p>Prix HT : <?= number_format($priceHT, 2) ?> €</p>
             <p>Montant de la TVA (<?= $tva ?>%) : <?= number_format($montantTVA, 2) ?> €</p>
             <p>Prix TTC : <?= number_format($prixTTC, 2) ?> €</p>
+            
             <p class="promo">
                 Prix final avec remise de <?= $remise ?>% :
                 <?= number_format($prixFinal, 2) ?> €
