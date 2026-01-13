@@ -1,6 +1,6 @@
 <?php
 try {
-    $pdo = new PDO(
+    $pdo = new PDO( // On se connecte à la base de données
         "mysql:host=localhost;dbname=boutique;charset=utf8mb4",
         "dev",
         "dev",
