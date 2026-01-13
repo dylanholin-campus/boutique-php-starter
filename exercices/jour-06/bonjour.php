@@ -3,6 +3,10 @@ $nom = $_GET['name'] ?? 'visiteur';
 
 $age = $_GET['age'] ?? null;
 
+if (empty($nom) ) {
+    $nom = "visiteur";
+}
+
 $nomPropre = htmlspecialchars($nom);
 $agePropre = htmlspecialchars($age);
 
@@ -10,13 +14,15 @@ $agePropre = htmlspecialchars($age);
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Exercice Bonjour</title>
 </head>
+
 <body>
     <h1>
-        <?php 
+        <?php
         if ($age) {
             echo "Bonjour $nomPropre, vous avez $agePropre ans !";
         } else {
@@ -29,6 +35,5 @@ $agePropre = htmlspecialchars($age);
     </h1>
 
 </body>
+
 </html>
-
-
