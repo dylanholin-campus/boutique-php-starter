@@ -22,28 +22,107 @@ $users = [
     new User("Pierre Durand", "pierre@example.com", "azerty789", "2024-01-20 14:45:00")
 ];
 
+// Tableau de mots de passe pour tester la vérification
+$passwordsToTest = [
+    "password123",
+    "secure456",
+    "a789"
+];
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Classes PHP</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        h1 { color: #333; border-bottom: 3px solid #0066cc; padding-bottom: 10px; }
-        h2 { color: #0066cc; margin-top: 30px; }
-        table { width: 100%; border-collapse: collapse; background: white; margin: 15px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        th { background: #0066cc; color: white; padding: 12px; text-align: left; }
-        td { padding: 10px 12px; border-bottom: 1px solid #ddd; }
-        tr:hover { background: #f9f9f9; }
-        .status-in-stock { color: green; font-weight: bold; }
-        .status-out-of-stock { color: red; font-weight: bold; }
-        .status-new { color: orange; font-weight: bold; }
-        .status-old { color: gray; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #0066cc;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #0066cc;
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: #0066cc;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+            word-break: break-all;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        .status-in-stock {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-out-of-stock {
+            color: red;
+            font-weight: bold;
+        }
+
+        .status-new {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .status-old {
+            color: gray;
+        }
+
+        .status-valid {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-invalid {
+            color: red;
+            font-weight: bold;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>📊 Test des Classes PHP</h1>
@@ -63,21 +142,21 @@ $users = [
             </thead>
             <tbody>
                 <?php foreach ($products as $p): ?>
-                <tr>
-                    <td><?= $p->id ?></td>
-                    <td><?= $p->nom ?></td>
-                    <td><?= $p->categorie ?></td>
-                    <td><?= number_format($p->prix, 2, ',', ' ') ?>€</td>
-                    <td><?= number_format($p->getPriceIncludingTax(), 2, ',', ' ') ?>€</td>
-                    <td><?= $p->stock ?></td>
-                    <td>
-                        <?php if ($p->isInStock()): ?>
-                            <span class="status-in-stock">✓ En stock</span>
-                        <?php else: ?>
-                            <span class="status-out-of-stock">✗ Rupture</span>
-                        <?php endif; ?>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?= $p->id ?></td>
+                        <td><?= $p->nom ?></td>
+                        <td><?= $p->categorie ?></td>
+                        <td><?= number_format($p->prix, 2, ',', ' ') ?>€</td>
+                        <td><?= number_format($p->getPriceIncludingTax(), 2, ',', ' ') ?>€</td>
+                        <td><?= $p->stock ?></td>
+                        <td>
+                            <?php if ($p->isInStock()): ?>
+                                <span class="status-in-stock">✓ En stock</span>
+                            <?php else: ?>
+                                <span class="status-out-of-stock">✗ Rupture</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
@@ -90,23 +169,35 @@ $users = [
                     <th>Email</th>
                     <th>Date Inscription</th>
                     <th>Nouveau Membre</th>
+                    <th>Password Hashé</th>
+                    <th>Vérification Password</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $u): ?>
-                <tr>
-                    <td><?= $u->nom ?></td>
-                    <td><?= $u->email ?></td>
-                    <td><?= $u->dateInscription ?></td>
-                    <td>
-                        <?php if ($u->isNewMember()): ?>
-                            <span class="status-new">✓ Nouveau</span>
-                        <?php else: ?>
-                            <span class="status-old">- Ancien</span>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
+                <?php $index = 0;
+                foreach ($users as $u): $correctPassword = $passwordsToTest[$index]; ?>
+                    <tr>
+                        <td><?= $u->nom ?></td>
+                        <td><?= $u->email ?></td>
+                        <td><?= $u->dateInscription ?></td>
+                        <td>
+                            <?php if ($u->isNewMember()): ?>
+                                <span class="status-new">✓ Nouveau</span>
+                            <?php else: ?>
+                                <span class="status-old">- Ancien</span>
+                            <?php endif; ?>
+                        </td>
+                        <td><code><?= substr($u->password, 0, 30) ?>...</code></td>
+                        <td>
+                            <?php if ($u->verifyPassword($correctPassword)): ?>
+                                <span class="status-valid">✓ Password valide</span>
+                            <?php else: ?>
+                                <span class="status-invalid">✗ Password invalide</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php $index++;
+                endforeach; ?>
             </tbody>
         </table>
 
@@ -137,4 +228,5 @@ $users = [
         </table>
     </div>
 </body>
+
 </html>
