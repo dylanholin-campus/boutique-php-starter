@@ -1,11 +1,13 @@
 <?php
 
-class Product {
+class Product
+{
     public $name;
     public $price;
     public $stock;
 
-    public function __construct($name, $price, $stock) {
+    public function __construct($name, $price, $stock)
+    {
         $this->name = $name;
         $this->price = $price;
         $this->stock = $stock;
@@ -24,14 +26,11 @@ $totalStock = 0;
 $totalValue = 0;
 
 foreach ($products as $product) {
-    echo "{$product->name} - {$product->price}€ x {$product->stock} = " . ($product->price * $product->stock) . "€\n";
+    echo "<br>{$product->name} - {$product->price}€ x {$product->stock} = " . ($product->price * $product->stock) . "€\n";
     $totalStock += $product->stock;
     $totalValue += $product->price * $product->stock;
 }
 
-// Afficher les résultats
-echo "\n--- RÉSUMÉ ---\n";
-echo "Stock total: {$totalStock} unités\n";
-echo "Valeur totale du catalogue: {$totalValue}€\n";
-
-?>
+echo "<br><br>--- RÉSUMÉ ---<br>";
+echo "<br>Stock total: {$totalStock} unités<br>";
+echo "<br>Valeur totale du catalogue: {$totalValue}€<br>";
