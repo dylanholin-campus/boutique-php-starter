@@ -1,0 +1,133 @@
+<?php
+
+class Product {
+    private $nom;
+    private $prix; 
+
+    public function __construct($nom, $prix) {
+        $this->nom = $nom;
+        $this->prix = (float)$prix;
+    }
+
+    public function getNom() { return $this->nom; }
+    public function getPrix() { return $this->prix; }
+}
+
+class CartItem {
+    private $product;  
+    public $quantite;
+
+    public function __construct($product, $quantite) {
+        $this->product = $product;
+        $this->quantite = max(0, (int)$quantite);
+    }
+
+    public function getProduct() { return $this->product; }
+    public function getTotal() {
+        return $this->product->getPrix() * $this->quantite;
+    }
+}
+
+class Cart {
+    private $items = []; 
+
+    public function add($product, $quantite = 1) {
+        $nomProduit = $product->getNom();
+        $quantite = max(0, (int)$quantite);
+        if ($quantite === 0) return;
+
+        if (isset($this->items[$nomProduit])) {
+            $this->items[$nomProduit]->quantite += $quantite;
+        } else {
+            $this->items[$nomProduit] = new CartItem($product, $quantite);
+        }
+    }
+
+    public function remove($nomProduit) {
+        if (isset($this->items[$nomProduit])) {
+            unset($this->items[$nomProduit]); 
+        }
+    }
+
+    public function update($nomProduit, $nouvelleQuantite) {
+        $nouvelleQuantite = max(0, (int)$nouvelleQuantite);
+        if (!isset($this->items[$nomProduit])) return;
+
+        if ($nouvelleQuantite === 0) {
+            $this->remove($nomProduit);
+            return;
+        }
+
+        $this->items[$nomProduit]->quantite = $nouvelleQuantite;
+    }
+
+    public function getTotal() {
+        $total = 0;
+        foreach ($this->items as $item) {
+            $total += $item->getTotal();
+        }
+        return $total;
+    }
+
+    public function count() {
+        return count($this->items); 
+    }
+
+    public function clear() {
+        $this->items = [];
+    }
+}
+
+function afficherPanier($panier, $titre) {
+    echo "<strong>" . $titre . "</strong><br>";
+    echo "Nombre d'articles différents : " . $panier->count() . "<br>";
+    echo "Total panier : " . number_format($panier->getTotal(), 2) . " €<br>";
+
+    if ($panier->count() === 0) {
+        echo "(panier vide)<br><br>";
+        return;
+    }
+
+    foreach ($panier->items as $nomProduit => $item) {
+        echo "- " . $nomProduit
+            . " | prix: " . number_format($item->getProduct()->getPrix(), 2) . " €"
+            . " | quantité: " . $item->quantite
+            . " | sous-total: " . number_format($item->getTotal(), 2) . " €<br>";
+    }
+
+    echo "<br>";
+}
+
+$oeufDragon = new Product("Oeuf de dragon", 12.50);
+$poussiereLicorne = new Product("Poussière de licorne", 4.20);
+$plumePhenix = new Product("Plume de phénix", 7.90);
+
+$panierMagique = new Cart();
+
+afficherPanier($panierMagique, "État initial");
+
+$panierMagique->add($oeufDragon, 2);
+afficherPanier($panierMagique, "Après add(Oeuf de dragon, 2)");
+
+$panierMagique->add($poussiereLicorne, 1);
+afficherPanier($panierMagique, "Après add(Poussière de licorne, 1)");
+
+$panierMagique->add($poussiereLicorne, 3); 
+afficherPanier($panierMagique, "Après add(Poussière de licorne, 3) (cumul)");
+
+$panierMagique->update("Oeuf de dragon", 1);
+afficherPanier($panierMagique, "Après update(Oeuf de dragon => 1)");
+
+$panierMagique->add($plumePhenix, 2);
+afficherPanier($panierMagique, "Après add(Plume de phénix, 2)");
+
+$panierMagique->remove("Poussière de licorne");
+afficherPanier($panierMagique, "Après remove(Poussière de licorne)");
+
+$panierMagique->update("Plume de phénix", 0); 
+afficherPanier($panierMagique, "Après update(Plume de phénix => 0) (suppression)");
+
+$panierMagique->clear();
+afficherPanier($panierMagique, "Après clear()");
+
+?>
