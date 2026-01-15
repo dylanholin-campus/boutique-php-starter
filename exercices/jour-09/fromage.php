@@ -90,17 +90,19 @@ $weightComte = new weight($produitComte, 1.5);
 $weightRoquefort = new weight($produitRoquefort, 3);
 $weightEmmental = new weight($produitEmmental, 5);
 
-echo " - " . $weightBrie->weight . " Kilo - " . $quantityBrie->product->nom . " (" . $quantityBrie->product->category->nom . ") x" . $quantityBrie->quantite
-    . " = " . number_format($quantityBrie->getTotal(), 2) . " €<br>";
+function afficherLigne($weightLocal, $quantityLocal)
+{
+    echo " - " . $weightLocal->weight . " Kilo - "
+        . $quantityLocal->product->nom . " (" . $quantityLocal->product->category->nom . ") x" . $quantityLocal->quantite
+        . " = " . number_format($quantityLocal->getTotal(), 2) . " €<br>";
+}
 
-echo " - " . $weightComte->weight . " Kilo - " . $quantityComte->product->nom . " (" . $quantityComte->product->category->nom . ") x" . $quantityComte->quantite
-    . " = " . number_format($quantityComte->getTotal(), 2) . " €<br>";
+afficherLigne($weightBrie, $quantityBrie);
+afficherLigne($weightComte, $quantityComte);
+afficherLigne($weightRoquefort, $quantityRoquefort);
+afficherLigne($weightEmmental, $quantityEmmental);
+echo "<br>";
 
-echo " - " . $weightRoquefort->weight . " Kilo - " . $quantityRoquefort->product->nom . " (" . $quantityRoquefort->product->category->nom . ") x" . $quantityRoquefort->quantite
-    . " = " . number_format($quantityRoquefort->getTotal(), 2) . " €<br>";
-
-echo " - " . $weightEmmental->weight . " Kilo - " . $quantityEmmental->product->nom . " (" . $quantityEmmental->product->category->nom . ") x" . $quantityEmmental->quantite
-    . " = " . number_format($quantityEmmental->getTotal(), 2) . " €<br><br>";
 
 $quantityComte->incrementequantity(2);
 $quantityRoquefort->decrementequantity(1);
