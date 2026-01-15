@@ -62,17 +62,12 @@ class weight
         $this->weight = max(0, (float)$weight);
     }
 
-    public function getTotalweight()
-    {
-        return $this->product->prix * $this->weight;
-    }
-
-    public function incrementeweight($pas = 1)
+    public function incrementeWeight($pas = 1)
     {
         $this->weight += max(0, (float)$pas);
     }
 
-    public function decrementeweight($pas = 1)
+    public function decrementeWeight($pas = 1)
     {
         $this->weight = max(0, $this->weight - max(0, (float)$pas));
     }
@@ -114,4 +109,4 @@ $weightEmmental->decrementeweight(2.5);
 echo "Après modification :<br>";
 echo $quantityComte->product->nom . " x" . $quantityComte->quantite . " = " . number_format($quantityComte->getTotal(), 2) . " €<br>";
 echo $quantityRoquefort->product->nom . " x" . $quantityRoquefort->quantite . " = " . number_format($quantityRoquefort->getTotal(), 2) . " €<br>";
-echo $quantityEmmental->product->nom . " - " . $weightEmmental->weight . " Kilo - " . number_format($quantityRoquefort->getTotal(), 2) . " €<br>";
+echo " Nouveau poids de " . $quantityEmmental->product->nom . " - " . $weightEmmental->weight . " Kilo - <br>";
