@@ -57,8 +57,6 @@ class User {
     }
 }
 
-/* ===== Tests ===== */
-
 $utilisateur = new User("Bob", "bob@example.com", "2026-01-15");
 
 $adresseMaison = new Address("12 rue des Dragons", "Mageville", "26000", "France");

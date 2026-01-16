@@ -1,152 +1,138 @@
 <?php
 session_start();
 
-try {
-    $pdo = new PDO(
-        "mysql:host=localhost;dbname=boutique;charset=utf8mb4",
-        "dev",
-        "dev",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+/* 1) Connexion BDD (PDO) */
+$pdo = new PDO(
+    "mysql:host=localhost;dbname=boutique;charset=utf8mb4",
+    'dev',
+    'dev',
+    [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]
+);
 
-    $cart = $_SESSION["cart"] ?? [];
-    $products = [];
-    $total = 0;
+if (!isset($_SESSION['cart'])) { // si cart n’existe pas encore dans la session
+    $_SESSION['cart'] = []; 
+}
 
-    // Récupérer les détails des produits du panier
-    if (!empty($cart)) {
-        $cartIds = array_keys($cart);
-        $placeholders = str_repeat('?,', count($cartIds) - 1) . '?';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { /* Actions simples (ajouter / modifier / supprimer / vider) */
 
-        $stmt = $pdo->prepare("SELECT * FROM products WHERE id IN ($placeholders)");
-        $stmt->execute($cartIds);
-        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (isset($_POST['add_id'])) {     // Ajouter 1 produit (ex: depuis un bouton "Ajouter au panier")
+        $id = (int) $_POST['add_id']; // exécute ce code seulement si le formulaire a envoyé un champ add_id
 
-        // Calculer le total
-        foreach ($products as $product) {
-            $productId = $product['id'];
-            $quantity = $cart[$productId]["quantity"];
-            $total += $product['price'] * $quantity;
+        if ($id > 0) {
+            $_SESSION['cart'][$id] = ($_SESSION['cart'][$id] ?? 0) + 1;
         }
+        header('Location: panier.php');
+        exit;
     }
 
-    // Modifier quantité
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["update_cart"])) {
-        foreach ($_POST["quantities"] as $id => $qty) {
+
+    if (isset($_POST['quantities']) && is_array($_POST['quantities'])) {  // Mettre à jour les quantités 
+        foreach ($_POST['quantities'] as $id => $qty) {
+            $id = (int) $id;
+            $qty = (int) $qty;
+
+            if ($id <= 0) continue;
+
             if ($qty <= 0) {
-                unset($_SESSION["cart"][$id]);
+                unset($_SESSION['cart'][$id]);      // qty 0 => supprimer
             } else {
-                $_SESSION["cart"][$id]["quantity"] = (int)$qty;
+                $_SESSION['cart'][$id] = $qty;      // sinon mettre à jour
             }
         }
-        header("Location: panier.php");
+        header('Location: panier.php');
         exit;
     }
+}
 
-    // Vider le panier
-    if (isset($_GET["empty"])) {
-        $_SESSION["cart"] = [];
-        header("Location: panier.php");
-        exit;
+// Vider le panier (lien ?empty=1)
+if (isset($_GET['empty'])) {
+    $_SESSION['cart'] = [];
+    header('Location: panier.php');
+    exit;
+}
+
+/* 4) Lire les produits depuis la BDD */
+$cart = $_SESSION['cart'];
+$products = [];
+$total = 0.0;
+
+if (!empty($cart)) {
+    // Simple pour débutant : 1 requête par produit
+    $stmt = $pdo->prepare('SELECT id, name, price FROM products WHERE id = ?');
+
+    foreach ($cart as $id => $qty) {
+        $stmt->execute([(int)$id]);
+        $product = $stmt->fetch();
+
+        if ($product) {
+            $product['qty'] = (int)$qty;
+            $product['line_total'] = $product['price'] * $product['qty'];
+            $total += $product['line_total'];
+            $products[] = $product;
+        } else {
+            // si le produit n'existe plus en BDD, on le retire du panier
+            unset($_SESSION['cart'][(int)$id]);
+        }
     }
-} catch (PDOException $e) {
-    die("Erreur : " . $e->getMessage());
 }
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Mon Panier</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 20px 0;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 12px;
-        }
-
-        .total {
-            font-weight: bold;
-            font-size: 1.2em;
-            color: green;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            margin: 4px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: #007bff;
-            color: white;
-        }
-
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-    </style>
+    <meta charset="utf-8">
+    <title>Panier</title>
 </head>
 
 <body>
-    <header>
-        <h1>Mon Panier (<?= count($cart) ?> articles)</h1>
-        <a href="catalogue-panier.php">← Continuer les achats</a>
-    </header>
 
-    <?php if (empty($cart)): ?>
+    <h1>Panier</h1>
+
+                <p><a href="http://localhost:8000/exercices/jour-07/catalogue-panier.php">Retour</a></p>
+
+    <?php if (empty($products)): ?>
         <p>Votre panier est vide.</p>
     <?php else: ?>
-        <form method="POST">
-            <input type="hidden" name="update_cart" value="1">
 
-            <table>
-                <thead>
+        <form method="post">
+            <table border="1" cellpadding="6">
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total ligne</th>
+                </tr>
+
+                <?php foreach ($products as $p): ?>
                     <tr>
-                        <th>Produit</th>
-                        <th>Prix unitaire</th>
-                        <th>Quantité</th>
-                        <th>Sous-total</th>
+                        <td><?= htmlspecialchars($p['name']) ?></td>
+                        <td><?= number_format((float)$p['price'], 2, ',', ' ') ?> €</td>
+                        <td>
+                            <input
+                                type="number"
+                                min="0"
+                                name="quantities[<?= (int)$p['id'] ?>]"
+                                value="<?= (int)$p['qty'] ?>">
+                        </td>
+                        <td><?= number_format((float)$p['line_total'], 2, ',', ' ') ?> €</td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($products as $product): ?>
-                        <?php $productId = $product['id']; ?>
-                        <?php $quantity = $cart[$productId]["quantity"] ?? 0; ?>
-                        <?php $subtotal = $product['price'] * $quantity; ?>
-                        <tr>
-                            <td><?= htmlspecialchars($product['name']) ?></td>
-                            <td><?= number_format($product['price'], 2) ?> €</td>
-                            <td>
-                                <input type="number" name="quantities[<?= $productId ?>]"
-                                    value="<?= $quantity ?>" min="0" style="width: 60px;">
-                            </td>
-                            <td><?= number_format($subtotal, 2) ?> €</td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3"><strong>Total général :</strong></td>
-                        <td class="total"><?= number_format($total, 2) ?> €</td>
-                    </tr>
-                </tfoot>
+                <?php endforeach; ?>
+
             </table>
 
-            <button type="submit" class="btn btn-primary">Mettre à jour</button>
-            <a href="?empty=1" class="btn btn-danger" onclick="return confirm('Vider le panier ?')">Vider le panier</a>
+
+            <p><strong>Total :</strong> <?= number_format((float)$total, 2, ',', ' ') ?> €</p>
+
+            <button type="submit">Mettre à jour le panier</button>
         </form>
+
+        <p><a href="panier.php?empty=1">Vider le panier</a></p>
+
     <?php endif; ?>
+
 </body>
 
 </html>
