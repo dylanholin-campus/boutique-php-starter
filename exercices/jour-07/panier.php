@@ -1,138 +1,154 @@
 <?php
+declare(strict_types=1);
 session_start();
 
-/* 1) Connexion BDD (PDO) */
 $pdo = new PDO(
     "mysql:host=localhost;dbname=boutique;charset=utf8mb4",
-    'dev',
-    'dev',
+    "dev",
+    "dev",
     [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]
 );
 
-if (!isset($_SESSION['cart'])) { // si cart n’existe pas encore dans la session
-    $_SESSION['cart'] = []; 
+if (!isset($_SESSION['cart'])) { /* Initialiser le panier */
+    $_SESSION['cart'] = [];
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') { /* Actions simples (ajouter / modifier / supprimer / vider) */
 
-    if (isset($_POST['add_id'])) {     // Ajouter 1 produit (ex: depuis un bouton "Ajouter au panier")
-        $id = (int) $_POST['add_id']; // exécute ce code seulement si le formulaire a envoyé un champ add_id
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {/* Actions POST : ajouter / modifier quantités */
+
+
+    if (isset($_POST['add_id'])) {    // Ajouter 1 produit
+        $id = (int) $_POST['add_id'];
 
         if ($id > 0) {
-            $_SESSION['cart'][$id] = ($_SESSION['cart'][$id] ?? 0) + 1;
+            if (isset($_SESSION['cart'][$id])) {
+                $_SESSION['cart'][$id] = $_SESSION['cart'][$id] + 1;
+            } else {
+                $_SESSION['cart'][$id] = 1;
+            }
         }
+
         header('Location: panier.php');
         exit;
     }
 
 
-    if (isset($_POST['quantities']) && is_array($_POST['quantities'])) {  // Mettre à jour les quantités 
+    if (isset($_POST['quantities']) && is_array($_POST['quantities'])) {    // Mettre à jour les quantités
         foreach ($_POST['quantities'] as $id => $qty) {
             $id = (int) $id;
             $qty = (int) $qty;
 
-            if ($id <= 0) continue;
-
-            if ($qty <= 0) {
-                unset($_SESSION['cart'][$id]);      // qty 0 => supprimer
-            } else {
-                $_SESSION['cart'][$id] = $qty;      // sinon mettre à jour
+            if ($id > 0) {
+                if ($qty <= 0) {
+                    unset($_SESSION['cart'][$id]);
+                } else {
+                    $_SESSION['cart'][$id] = $qty;
+                }
             }
         }
+
         header('Location: panier.php');
         exit;
     }
 }
 
-// Vider le panier (lien ?empty=1)
-if (isset($_GET['empty'])) {
+
+if (isset($_GET['empty'])) {/* Action GET : vider */
     $_SESSION['cart'] = [];
     header('Location: panier.php');
     exit;
 }
 
-/* 4) Lire les produits depuis la BDD */
-$cart = $_SESSION['cart'];
+
+$cart = $_SESSION['cart'];/* Lecture panier + BDD */
 $products = [];
 $total = 0.0;
 
 if (!empty($cart)) {
-    // Simple pour débutant : 1 requête par produit
-    $stmt = $pdo->prepare('SELECT id, name, price FROM products WHERE id = ?');
+    $ids = array_keys($cart);
 
-    foreach ($cart as $id => $qty) {
-        $stmt->execute([(int)$id]);
-        $product = $stmt->fetch();
 
-        if ($product) {
-            $product['qty'] = (int)$qty;
-            $product['line_total'] = $product['price'] * $product['qty'];
-            $total += $product['line_total'];
-            $products[] = $product;
-        } else {
-            // si le produit n'existe plus en BDD, on le retire du panier
-            unset($_SESSION['cart'][(int)$id]);
+    $placeholders = [];    // Construire "?, ?, ?" selon le nombre d'ids
+    for ($i = 0; $i < count($ids); $i++) {
+        $placeholders[] = '?';
+    }
+    $sqlIn = implode(',', $placeholders);
+
+    $stmt = $pdo->prepare("SELECT id, name, price FROM products WHERE id IN ($sqlIn)");  // Requête préparée
+    $stmt->execute($ids); // valeurs séparées du SQL
+    $rows = $stmt->fetchAll();
+
+    foreach ($rows as $row) {
+        $id = (int) $row['id'];
+
+
+        $qty = 0;        // récupérer la quantité depuis la session
+        if (isset($cart[$id])) {
+            $qty = (int) $cart[$id];
+        }
+
+        if ($qty > 0) {
+            $lineTotal = (float) $row['price'] * $qty;
+            $total += $lineTotal;
+
+            $products[] = [
+                'id' => $id,
+                'name' => $row['name'],
+                'price' => (float) $row['price'],
+                'qty' => $qty,
+                'line_total' => $lineTotal,
+            ];
         }
     }
 }
 ?>
 <!doctype html>
 <html lang="fr">
-
 <head>
     <meta charset="utf-8">
     <title>Panier</title>
 </head>
-
 <body>
 
-    <h1>Panier</h1>
+<h1>Panier</h1>
 
-                <p><a href="http://localhost:8000/exercices/jour-07/catalogue-panier.php">Retour</a></p>
+<p><a href="catalogue-panier.php">Retour</a></p>
 
-    <?php if (empty($products)): ?>
-        <p>Votre panier est vide.</p>
-    <?php else: ?>
+<?php if (empty($products)): ?>
+    <p>Votre panier est vide.</p>
+<?php else: ?>
+    <form method="post">
+        <table border="1" cellpadding="6">
+            <tr>
+                <th>Produit</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total ligne</th>
+            </tr>
 
-        <form method="post">
-            <table border="1" cellpadding="6">
+            <?php foreach ($products as $p): ?>
                 <tr>
-                    <th>Produit</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                    <th>Total ligne</th>
+                    <td><?= htmlspecialchars($p['name']) ?></td>
+                    <td><?= number_format($p['price'], 2, ',', ' ') ?> €</td>
+                    <td>
+                        <input type="number" min="0"
+                               name="quantities[<?= (int)$p['id'] ?>]"
+                               value="<?= (int)$p['qty'] ?>">
+                    </td>
+                    <td><?= number_format($p['line_total'], 2, ',', ' ') ?> €</td>
                 </tr>
+            <?php endforeach; ?>
+        </table>
 
-                <?php foreach ($products as $p): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($p['name']) ?></td>
-                        <td><?= number_format((float)$p['price'], 2, ',', ' ') ?> €</td>
-                        <td>
-                            <input
-                                type="number"
-                                min="0"
-                                name="quantities[<?= (int)$p['id'] ?>]"
-                                value="<?= (int)$p['qty'] ?>">
-                        </td>
-                        <td><?= number_format((float)$p['line_total'], 2, ',', ' ') ?> €</td>
-                    </tr>
-                <?php endforeach; ?>
+        <p><strong>Total :</strong> <?= number_format($total, 2, ',', ' ') ?> €</p>
+        <button type="submit">Mettre à jour le panier</button>
+    </form>
 
-            </table>
-
-
-            <p><strong>Total :</strong> <?= number_format((float)$total, 2, ',', ' ') ?> €</p>
-
-            <button type="submit">Mettre à jour le panier</button>
-        </form>
-
-        <p><a href="panier.php?empty=1">Vider le panier</a></p>
-
-    <?php endif; ?>
+    <p><a href="panier.php?empty=1">Vider le panier</a></p>
+<?php endif; ?>
 
 </body>
-
 </html>
