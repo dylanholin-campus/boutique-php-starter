@@ -1,35 +1,45 @@
 <?php
 
-class Product {
-    public $nom;
-    public $prix; 
+class Category {
+    public string $nom;
 
-    public function __construct($nom, $prix) {
+    public function __construct(string $nom) {
         $this->nom = $nom;
-        $this->prix = (float)$prix;
+    }
+}
+
+class Product {
+    public string $nom;
+    public float $prix;
+    public Category $category;
+
+    public function __construct(string $nom, float $prix, Category $category) {
+        $this->nom = $nom;
+        $this->prix = (float) $prix;
+        $this->category = $category;
     }
 }
 
 class CartItem {
-    public $product;  
-    public $quantite; 
+    public Product $product;
+    public int $quantite;
 
-    public function __construct($product, $quantite) {
+    public function __construct(Product $product, int $quantite) {
         $this->product = $product;
-        $this->quantite = max(0, (int)$quantite);
+        $this->quantite = max(0, (int) $quantite);
     }
 
-    public function getTotal() {
+    public function getTotal(): float {
         return $this->product->prix * $this->quantite;
     }
 }
 
 class Cart {
-    public $items = []; 
+    public array $items = [];
 
-    public function add($product, $quantite = 1) {
+    public function add(Product $product, int $quantite = 1): void {
         $nomProduit = $product->nom;
-        $quantite = max(0, (int)$quantite);
+        $quantite = max(0, (int) $quantite);
         if ($quantite === 0) return;
 
         if (isset($this->items[$nomProduit])) {
@@ -39,14 +49,14 @@ class Cart {
         }
     }
 
-    public function remove($nomProduit) {
+    public function remove(string $nomProduit): void {
         if (isset($this->items[$nomProduit])) {
-            unset($this->items[$nomProduit]); 
+            unset($this->items[$nomProduit]);
         }
     }
 
-    public function update($nomProduit, $nouvelleQuantite) {
-        $nouvelleQuantite = max(0, (int)$nouvelleQuantite);
+    public function update(string $nomProduit, int $nouvelleQuantite): void {
+        $nouvelleQuantite = max(0, (int) $nouvelleQuantite);
         if (!isset($this->items[$nomProduit])) return;
 
         if ($nouvelleQuantite === 0) {
@@ -57,24 +67,24 @@ class Cart {
         $this->items[$nomProduit]->quantite = $nouvelleQuantite;
     }
 
-    public function getTotal() {
-        $total = 0;
+    public function getTotal(): float {
+        $total = 0.0;
         foreach ($this->items as $item) {
             $total += $item->getTotal();
         }
         return $total;
     }
 
-    public function count() {
-        return count($this->items); 
+    public function count(): int {
+        return count($this->items);
     }
 
-    public function clear() {
+    public function clear(): void {
         $this->items = [];
     }
 }
 
-function afficherPanier($panier, $titre) {
+function afficherPanier(Cart $panier, string $titre): void {
     echo "<strong>" . $titre . "</strong><br>";
     echo "Nombre d'articles différents : " . $panier->count() . "<br>";
     echo "Total panier : " . number_format($panier->getTotal(), 2) . " €<br>";
@@ -86,6 +96,7 @@ function afficherPanier($panier, $titre) {
 
     foreach ($panier->items as $nomProduit => $item) {
         echo "- " . $nomProduit
+            . " | catégorie: " . $item->product->category->nom
             . " | prix: " . number_format($item->product->prix, 2) . " €"
             . " | quantité: " . $item->quantite
             . " | sous-total: " . number_format($item->getTotal(), 2) . " €<br>";
@@ -94,13 +105,16 @@ function afficherPanier($panier, $titre) {
     echo "<br>";
 }
 
-$oeufDragon = new Product("Oeuf de dragon", 12.50);
-$poussiereLicorne = new Product("Poussière de licorne", 4.20);
-$plumePhenix = new Product("Plume de phénix", 7.90);
+$catCreatures = new Category("Créatures");
+$catPoudres = new Category("Poudres magiques");
+
+$oeufDragon = new Product("Oeuf de dragon", 12.50, $catCreatures);
+$poussiereLicorne = new Product("Poussière de licorne", 4.20, $catPoudres);
+$plumePhenix = new Product("Plume de phénix", 7.90, $catCreatures);
 
 $panierMagique = new Cart();
 
-afficherPanier($panierMagique, "État initial"); /* Tests de toutes les méthodes */
+afficherPanier($panierMagique, "État initial");
 
 $panierMagique->add($oeufDragon, 2);
 afficherPanier($panierMagique, "Après add(Oeuf de dragon, 2)");
@@ -108,7 +122,7 @@ afficherPanier($panierMagique, "Après add(Oeuf de dragon, 2)");
 $panierMagique->add($poussiereLicorne, 1);
 afficherPanier($panierMagique, "Après add(Poussière de licorne, 1)");
 
-$panierMagique->add($poussiereLicorne, 3); 
+$panierMagique->add($poussiereLicorne, 3);
 afficherPanier($panierMagique, "Après add(Poussière de licorne, 3) (cumul)");
 
 $panierMagique->update("Oeuf de dragon", 1);
@@ -120,7 +134,7 @@ afficherPanier($panierMagique, "Après add(Plume de phénix, 2)");
 $panierMagique->remove("Poussière de licorne");
 afficherPanier($panierMagique, "Après remove(Poussière de licorne)");
 
-$panierMagique->update("Plume de phénix", 0); 
+$panierMagique->update("Plume de phénix", 0);
 afficherPanier($panierMagique, "Après update(Plume de phénix => 0) (suppression)");
 
 $panierMagique->clear();

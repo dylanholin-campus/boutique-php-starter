@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {/* Actions POST : ajouter / modifier
 }
 
 
-if (isset($_GET['empty'])) {/* Action GET : vider */
+if (isset($_GET['empty'])) {
     $_SESSION['cart'] = [];
     header('Location: panier.php');
     exit;
@@ -77,8 +77,8 @@ if (!empty($cart)) {
     }
     $sqlIn = implode(',', $placeholders);
 
-    $stmt = $pdo->prepare("SELECT id, name, price FROM products WHERE id IN ($sqlIn)");  // Requête préparée
-    $stmt->execute($ids); // valeurs séparées du SQL
+    $stmt = $pdo->prepare("SELECT id, name, price FROM products WHERE id IN ($sqlIn)");  // Requête PDO préparée (sécurisée)
+    $stmt->execute($ids); //   execute($ids) rempalce les ? de mon sqlIn par les vrai id (1,2,3,4...)
     $rows = $stmt->fetchAll();
 
     foreach ($rows as $row) {
@@ -94,7 +94,7 @@ if (!empty($cart)) {
             $lineTotal = (float) $row['price'] * $qty;
             $total += $lineTotal;
 
-            $products[] = [
+            $products[] = [ // fiche produit
                 'id' => $id,
                 'name' => $row['name'],
                 'price' => (float) $row['price'],
