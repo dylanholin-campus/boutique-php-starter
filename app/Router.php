@@ -1,8 +1,10 @@
 <?php
-
 class Router
 {
-    private array $routes = [];
+    private array $routes = [
+        'GET' => [],
+        'POST' => [],
+    ];
 
     public function get(string $path, array $action): void
     {
@@ -21,13 +23,14 @@ class Router
 
         if (isset($this->routes[$method][$path])) {
             [$controller, $action] = $this->routes[$method][$path];
-            
+
             // On instancie la classe et on appelle la méthode
             $controllerInstance = new $controller();
             $controllerInstance->$action();
-        } else {
-            http_response_code(404);
-            echo "Page non trouvée";
+            return;
         }
+
+        http_response_code(404);
+        echo "Page non trouvée";
     }
 }

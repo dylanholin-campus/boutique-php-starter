@@ -1,24 +1,18 @@
 <?php
-// public/index.php devient par exemple /
+// public/index.php
 
-// recuperation de l'URI demandée (le chemin après le domaine)
+require __DIR__ . '/../app/Router.php';
+require __DIR__ . '/../app/Controller/HomeController.php';
+
+$router = new Router();
+
+// Route / -> HomeController::index()
+$router->get('/', [HomeController::class, 'index']);
+
+// (Optionnel) Route /produits juste pour éviter un 404 si tu cliques le lien
+$router->get('/produits', [HomeController::class, 'index']);
+
 $uri = $_SERVER['REQUEST_URI'];
-
-// recupération de la méthode HTTP (GET, POST, etc..)
 $method = $_SERVER['REQUEST_METHOD'];
 
-echo "<h1>Front Controller</h1>";
-echo "<p><strong>URI demandée :</strong> " . htmlspecialchars($uri) . "</p>";
-echo "<p><strong>Méthode HTTP :</strong> " . htmlspecialchars($method) . "</p>";
-
-echo "<hr>";
-if ($uri === '/') {
-    echo "🏠 Bienvenue sur l'accueil !"; //  http://localhost:8000/
-} elseif ($uri === '/produits') {
-    echo "📦 Liste des produits";   //       http://localhost:8000/produits
-} elseif (strpos($uri, '/test') === 0) { 
-    echo "🧪 Page de test détectée"; //     http://localhost:8000/test
-} else {
-    echo "❌ Page non trouvée (404)"; //      http://localhost:8000/index.php
-}
-?>
+$router->dispatch($uri, $method);
