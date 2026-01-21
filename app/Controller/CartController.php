@@ -61,7 +61,9 @@ public function add(): void
     $this->saveCart($cart);
 
     flash('success', 'Produit ajouté au panier.');
-    redirect('/panier');
+$back = $_SERVER['HTTP_REFERER'] ?? '/produits';
+header('Location: ' . $back);
+exit;
 }
 
 
