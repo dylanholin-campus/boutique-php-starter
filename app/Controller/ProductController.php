@@ -7,30 +7,32 @@ class ProductController
         $repo = new ProductRepository();
         $products = $repo->findAll();
 
-        $title = 'Liste des produits';
-        require __DIR__ . '/../../views/product/index.php';
+        view('product/index', [
+            'title' => 'Liste des produits',
+            'products' => $products,
+        ]);
     }
 
-public function show(array $params = []): void
-{
-    if (!isset($params['id']) || $params['id'] === '') {
-        header('Location: /produits');
-        exit;
+    public function show(array $params = []): void
+    {
+        if (!isset($params['id']) || $params['id'] === '') {
+            redirect('/produits');
+        }
+
+        $id = (int) $params['id'];
+
+        $repo = new ProductRepository();
+        $product = $repo->find($id);
+
+        if ($product === null) {
+            http_response_code(404);
+            view('errors/404', ['title' => 'Page non trouvée']);
+            return;
+        }
+
+        view('home/show', [
+            'title' => $product['name'] ?? 'Détail produit',
+            'product' => $product,
+        ]);
     }
-
-    $id = (int) $params['id'];
-    $repo = new ProductRepository();
-    $product = $repo->find($id);
-
-    if ($product === null) {
-        http_response_code(404);
-        $title = 'Page non trouvée';
-        require __DIR__ . '/../../views/errors/404.php';
-        return;
-    }
-
-    $title = $product['name'] ?? 'Détail produit';
-    require __DIR__ . '/../../views/home/show.php';
-}
-
 }

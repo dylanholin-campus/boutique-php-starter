@@ -33,11 +33,18 @@ class Router
 
                 $params = [];
                 foreach ($matches as $k => $v) {
-                    if (!is_int($k)) $params[$k] = $v;
+                    if (!is_int($k)) {
+                        $params[$k] = $v;
+                    }
                 }
 
                 $controllerInstance = new $controller();
-                $controllerInstance->$methodName($params);
+
+                if (!empty($params)) {
+                    $controllerInstance->$methodName($params);
+                } else {
+                    $controllerInstance->$methodName();
+                }
                 return;
             }
         }

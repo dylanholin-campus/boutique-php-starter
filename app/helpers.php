@@ -1,104 +1,33 @@
 <?php
 
-declare(strict_types=1);
-
-/*
-Greetings
-*/
-function greet(): void
+function redirect(string $url): void
 {
-    echo "Bienvenue sur la boutique !";
+    header('Location: ' . $url);
+    exit;
 }
 
-function greetClient(string $name): void
+function flash(string $key, ?string $message = null): ?string
 {
-    echo "Bonjour " . htmlspecialchars($name) . " !";
-}
-
-/*
-Calculs (return)
-*/
-function calculateVAT(float $priceExcludingTax, float $rate): float
-{
-    return $priceExcludingTax * ($rate / 100);
-}
-
-function calculateIncludingTax(float $priceExcludingTax, float $rate): float
-{
-    return $priceExcludingTax + calculateVAT($priceExcludingTax, $rate);
-}
-
-
-function formatPrice(float $price, string $currency = "€"): string
-{
-    return number_format($price, 2, ',', ' ') . ' ' . $currency;
-}
-
-function calculateDiscount(float $price, float $discount): float
-{
-    return $price * (1 - $discount / 100);
-}
-
-
-/*
-Check
-*/
-function isInStock(int $stock): bool
-{
-    return $stock > 0;
-}
-
-function isOnSale(float $discount): bool
-{
-    return $discount > 0;
-}
-
-function isNew(string $dateAdded, int $days = 30): bool
-{
-    $daysSince = (time() - strtotime($dateAdded)) / 86400;
-    return $daysSince < $days;
-}
-
-function canOrder(int $stock, int $quantity): bool
-{
-    return $stock >= $quantity;
-}
-
-/* 
-Affichage HTML
-*/
-function displayBadge(string $text, string $color): string
-{
-    return '<span class="badge" style="background:' . htmlspecialchars($color) . ';">'
-        . htmlspecialchars($text)
-        . '</span>';
-}
-
-function displayPrice(float $price, float $discount = 0, string $currency = "€"): string
-{
-    $formattedPrice = formatPrice($price, $currency, 2);
-
-    if ($discount > 0) {
-        $newPrice = calculateDiscount($price, $discount);
-        $formattedNew = formatPrice($newPrice, $currency, 2);
-
-        return '<span style="text-decoration: line-through; color:#6c757d;">' . $formattedPrice . '</span> '
-            . '<strong style="color:#e74c3c;">' . $formattedNew . '</strong>';
+    if ($message !== null) {
+        $_SESSION['_flash'][$key] = $message;
+        return null;
     }
 
-    return '<strong>' . $formattedPrice . '</strong>';
+    $msg = $_SESSION['_flash'][$key] ?? null;
+    unset($_SESSION['_flash'][$key]);
+    return $msg;
 }
 
-
-function displayStock(int $quantity): string
+function view(string $template, array $data = []): void
 {
-    if ($quantity <= 0) {
-        return '<span style="color:#e74c3c;">Rupture de stock</span>';
-    }
+    extract($data);
 
-    if ($quantity <= 5) {
-        return '<span style="color:#f39c12;">Stock faible (' . $quantity . ')</span>';
-    }
+    $templateFile = __DIR__ . '/../views/' . $template . '.php';
+    $layoutFile   = __DIR__ . '/../views/layout.php';
 
-    return '<span style="color:#27ae60;">En stock (' . $quantity . ')</span>';
+    ob_start();
+    require $templateFile;
+    $content = ob_get_clean();
+
+    require $layoutFile;
 }
