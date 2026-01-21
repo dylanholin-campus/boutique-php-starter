@@ -1,10 +1,15 @@
-Ton exercice sert à comprendre comment une appli web se découpe en MVC (Model–View–Controller) et comment une requête (URL) est “dirigée” vers le bon controller, qui choisit ensuite une view à afficher.​
+ MVC (Model–View–Controller) et comment une requête (URL) est “dirigée” vers le bon controller, qui choisit ensuite une view à afficher.​
+
+Le MVC en PHP est un pattern d’architecture qui sépare ton application en 3 rôles (Modèle, Vue, Contrôleur) 
+pour rendre le code plus clair, maintenable et évolutif. Le contrôleur reçoit la requête, demande au modèle les données/traitements, 
+puis choisit une vue à afficher.
+
+Principe du MVC
+
 MVC : vocabulaire
 
     Model (Modèle) : la partie “données + règles métier” (ex: produits, utilisateurs, accès base de données), sans HTML.​
-
     View (Vue) : la partie affichage (souvent HTML) qui présente des variables préparées par le controller.​
-
     Controller (Contrôleur) : reçoit la requête, décide quoi faire, prépare des variables, puis appelle une view.​
 
 Ta structure actuelle
@@ -15,27 +20,37 @@ Ton Router enregistre des routes (GET/POST) et, via dispatch(), retrouve l’act
 Flux d’une requête (logique)
 
     Le navigateur demande une URL (ex: /).​
-
     Le routeur récupère le chemin avec parse_url($uri, PHP_URL_PATH) (ça enlève les paramètres comme ?id=42).​
-
     Si la route existe, il exécute l’action : new $controller() puis $controllerInstance->$action() (ex: HomeController->index()).​
-
     Le controller prépare des variables (ex: $title) et inclut la view, qui rend le HTML.​​
 
 Syntaxe à retenir (niveau débutant)
 
     Déclarer une classe/méthode : class HomeController { public function index(): void { ... } } (le : void signifie “ne retourne rien”).​
-
     Passer des données à une view : tu définis des variables avant le require, et la view les utilise directement (ici $title).​
-
     Définir une route : ton routeur stocke une action sous forme de tableau [ControllerClass, 'methode'] dans $this->routes['GET'][$path].​
-
     Échapper l’affichage : htmlspecialchars() évite d’afficher du HTML/JS dangereux tel quel dans la page (protection XSS en sortie).​​
 
 Ce que tu dois “comprendre” pour le MVC
 
     Le controller ne doit pas contenir de gros HTML : il prépare des données et choisit la view.​
-
     La view doit rester “simple” : elle affiche des variables et fait le minimum de logique.​
+    Le Model viendra ensuite : c’est là que tu mettras la liste des produits (tableau PHP au début, puis base de données),
+    et le controller récupérera ces données pour les donner à la view.
 
-    Le Model viendra ensuite : c’est là que tu mettras la liste des produits (tableau PHP au début, puis base de données), et le controller récupérera ces données pour les donner à la view.
+Découpage des fichiers
+
+Une structure classique (surtout en “MVC maison” sans framework) ressemble à :
+
+    model/ : classes/fonctions liées aux données (ex. User.php, Article.php).​
+    view/ : templates (ex. article/show.php, user/login.php).​
+    controller/ : contrôleurs (ex. ArticleController.php).​
+    public/ : point d’entrée et fichiers statiques publics (index.php, css/, js/, images).​
+
+Beaucoup de projets ajoutent aussi un routeur (souvent public/index.php)
+qui analyse l’URL et décide quel contrôleur/méthode appeler, au lieu de tout faire via des require “au hasard”.
+Flux d’une requête (simple)
+
+    L’utilisateur appelle une URL (ex. /articles/42).​
+    Le routeur envoie vers ArticleController@show.​
+    Le contrôleur appelle le modèle (ex. Article::find(42)), récupère les données, puis charge une vue en lui passant des variables.

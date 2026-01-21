@@ -1,36 +1,48 @@
 <?php
+
 class Router
 {
-    private array $routes = [   // La structure finale ressemble à :
-        'GET' => [],            // $routes['GET']['/test'] = [ControllerClassName, 'methodName'];
-        'POST' => [],           // $routes['POST']['/login'] = [ControllerClassName, 'authenticate'];
-    ];                          // Le type array $action représente un “couple” [contrôleur, méthode].
+    private array $routes = [
+        'GET' => [],
+        'POST' => [],
+    ];
 
-    public function get(string $path, array $action): void   // ajoute une route GET (chemin + action) et ne retourne rien (void).
+    private function toRegex(string $pattern): string
     {
-        $this->routes['GET'][$path] = $action;               // signifie “dans la sous-table GET, à la clé $path, stocker le tableau $action”.
+        $regex = preg_replace('/\{(\w+)\}/', '(?P<$1>[^/]+)', $pattern);
+        return '#^' . $regex . '$#';
     }
 
-    public function post(string $path, array $action): void
+    public function get(string $pattern, array $action): void
     {
-        $this->routes['POST'][$path] = $action;
+        $this->routes['GET'][$this->toRegex($pattern)] = $action;
     }
 
-    public function dispatch(string $uri, string $method): void // reçoit l’URI demandée et la méthode HTTP, puis calcule $path = parse_url($uri,
+    public function post(string $pattern, array $action): void
     {
-        $path = parse_url($uri, PHP_URL_PATH);          // PHP_URL_PATH); pour ne garder que le chemin sans la query string (ex: /test au lieu de /test?id=42)
-                                                        // On extrait juste le chemin (ex: /test) sans les paramètres (?id=42)
-        if (isset($this->routes[$method][$path])) {     // vérifie si une route existe exactement pour ce couple (méthode, chemin).
-            [$controller, $action] = $this->routes[$method][$path]; // [$controller, $action] = ... est une déstructuration de tableau
-                                                                    // on récupère les deux éléments (classe contrôleur, nom de méthode) en deux variables.
-            $controllerInstance = new $controller();    //  instancie la classe dont le nom est dans la variable (instanciation dynamique).
-            $controllerInstance->$action();             // appelle une méthode dont le nom est dans une variable (appel dynamique).
-            return;
+        $this->routes['POST'][$this->toRegex($pattern)] = $action;
+    }
+
+    public function dispatch(string $uri, string $method): void
+    {
+        $path = parse_url($uri, PHP_URL_PATH);
+
+        foreach ($this->routes[$method] ?? [] as $regex => $action) {
+            if (preg_match($regex, $path, $matches)) {
+                [$controller, $methodName] = $action;
+
+                $params = [];
+                foreach ($matches as $k => $v) {
+                    if (!is_int($k)) $params[$k] = $v;
+                }
+
+                $controllerInstance = new $controller();
+                $controllerInstance->$methodName($params);
+                return;
+            }
         }
 
         http_response_code(404);
         echo "Page non trouvée";
     }
 }
-
-

@@ -33,7 +33,7 @@ class ProductRepository
         );
         //var_dump($stmt);
         $result = $stmt->execute([$name, $price, $id]);
-        //echo "$name";
+                //echo "$name";
         //var_dump($this->pdo->errorInfo());
         if ($result) {
             echo "vrai";

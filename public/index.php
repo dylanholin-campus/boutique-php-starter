@@ -1,18 +1,16 @@
 <?php
-// public/index.php
 
-require __DIR__ . '/../app/Router.php';
-require __DIR__ . '/../app/Controller/HomeController.php';
+require_once __DIR__ . '/../app/Router.php';
+
+require_once __DIR__ . '/../app/Controller/HomeController.php';
+require_once __DIR__ . '/../app/Controller/ProductController.php';
+
+require_once __DIR__ . '/../app/Repository/ProductRepository.php';
 
 $router = new Router();
 
-// Route / -> HomeController::index()
 $router->get('/', [HomeController::class, 'index']);
+$router->get('/produits', [ProductController::class, 'index']);
+$router->get('/produits/{id}', [ProductController::class, 'show']);
 
-// (Optionnel) Route /produits juste pour éviter un 404 si tu cliques le lien
-$router->get('/produits', [HomeController::class, 'index']);
-
-$uri = $_SERVER['REQUEST_URI'];
-$method = $_SERVER['REQUEST_METHOD'];
-
-$router->dispatch($uri, $method);
+$router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
