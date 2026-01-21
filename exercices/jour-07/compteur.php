@@ -11,7 +11,7 @@ if (!isset($_SESSION['visits'])) {
 $_SESSION['visits']++;
 
 
-echo "<br>Vous avez visité cette page " . $_SESSION['visits'] . " fois";
+echo '<br>Vous avez visité cette page ' . $_SESSION['visits'] . ' fois';
 ?>
 <br>
 <br>

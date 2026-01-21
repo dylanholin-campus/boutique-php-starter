@@ -1,8 +1,8 @@
 <?php
 $people = [
-    ["nom" => "Tom", "age" => 31, "city" => "Valence", "job" => "Eboueur"],
-    ["nom" => "Jean", "age" => 25, "city" => "Lyon", "job" => "Eboueur"],
-    ["nom" => "Tierry", "age" => 19, "city" => "Valence", "job" => "Formateur"]
+    ['nom' => 'Tom', 'age' => 31, 'city' => 'Valence', 'job' => 'Eboueur'],
+    ['nom' => 'Jean', 'age' => 25, 'city' => 'Lyon', 'job' => 'Eboueur'],
+    ['nom' => 'Tierry', 'age' => 19, 'city' => 'Valence', 'job' => 'Formateur']
 ];
 
 ?>

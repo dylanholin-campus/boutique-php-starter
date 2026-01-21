@@ -1,55 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 class Router
 {
+    /**
+     * @var array{
+     *     GET: array<string, array{0: class-string, 1: string}>,
+     *     POST: array<string, array{0: class-string, 1: string}>
+     * }
+     */
     private array $routes = [
         'GET' => [],
         'POST' => [],
     ];
 
-    private function toRegex(string $pattern): string
+    /**
+     * @param array{0: class-string, 1: string} $action
+     */
+    public function get(string $path, array $action): void
     {
-        $regex = preg_replace('/\{(\w+)\}/', '(?P<$1>[^/]+)', $pattern);
-        return '#^' . $regex . '$#';
+        $this->routes['GET'][$path] = $action;
     }
 
-    public function get(string $pattern, array $action): void
+    /**
+     * @param array{0: class-string, 1: string} $action
+     */
+    public function post(string $path, array $action): void
     {
-        $this->routes['GET'][$this->toRegex($pattern)] = $action;
-    }
-
-    public function post(string $pattern, array $action): void
-    {
-        $this->routes['POST'][$this->toRegex($pattern)] = $action;
+        $this->routes['POST'][$path] = $action;
     }
 
     public function dispatch(string $uri, string $method): void
     {
         $path = parse_url($uri, PHP_URL_PATH);
 
-        foreach ($this->routes[$method] ?? [] as $regex => $action) {
-            if (preg_match($regex, $path, $matches)) {
-                [$controller, $methodName] = $action;
-
-                $params = [];
-                foreach ($matches as $k => $v) {
-                    if (!is_int($k)) {
-                        $params[$k] = $v;
-                    }
-                }
-
-                $controllerInstance = new $controller();
-
-                if (!empty($params)) {
-                    $controllerInstance->$methodName($params);
-                } else {
-                    $controllerInstance->$methodName();
-                }
-                return;
-            }
+        if (isset($this->routes[$method][$path])) {
+            [$controller, $action] = $this->routes[$method][$path];
+            $controllerInstance = new $controller();
+            $controllerInstance->$action();
+            return;
         }
 
         http_response_code(404);
-        echo "Page non trouvée";
+        echo 'Page non trouvée';
     }
 }

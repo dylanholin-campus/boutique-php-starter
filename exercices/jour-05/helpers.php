@@ -7,12 +7,12 @@ Greetings
 */
 function greet(): void
 {
-    echo "Bienvenue sur la boutique !";
+    echo 'Bienvenue sur la boutique !';
 }
 
 function greetClient(string $name): void
 {
-    echo "Bonjour " . htmlspecialchars($name) . " !";
+    echo 'Bonjour ' . htmlspecialchars($name) . ' !';
 }
 
 /*
@@ -36,10 +36,9 @@ function calculateDiscount(float $price, float $percentage): float
 /*
 Format prix
 */
-function formatPrice(float $amount, string $currency = "€", int $decimals = 2): string
+function formatPrice(float $amount, string $currency = '€', int $decimals = 2): string
 {
-
-    return number_format($amount, $decimals) . " " . $currency;
+    return number_format($amount, $decimals) . ' ' . $currency;
 }
 
 /*
@@ -66,7 +65,7 @@ function canOrder(int $stock, int $quantity): bool
     return $stock >= $quantity;
 }
 
-/* 
+/*
 Affichage HTML
 */
 function displayBadge(string $text, string $color): string
@@ -76,7 +75,7 @@ function displayBadge(string $text, string $color): string
         . '</span>';
 }
 
-function displayPrice(float $price, float $discount = 0, string $currency = "€"): string
+function displayPrice(float $price, float $discount = 0, string $currency = '€'): string
 {
     $formattedPrice = formatPrice($price, $currency, 2);
 

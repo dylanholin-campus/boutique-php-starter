@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/helpers.php";
+require_once __DIR__ . '/helpers.php';
 
-$clientName = "Palapin le Magicien";
+$clientName = 'Palapin le Magicien';
 $priceHT = 100.0;
 $tva = 20.0;
 $remise = 10.0;
@@ -12,7 +12,7 @@ $prixTTC = calculateIncludingTax($priceHT, $tva);
 $prixFinal = calculateDiscount($prixTTC, $remise);
 
 $stock = 3;
-$dateAdded = "2025-12-20";
+$dateAdded = '2025-12-20';
 ?>
 <!doctype html>
 <html lang="fr">
@@ -38,14 +38,14 @@ $dateAdded = "2025-12-20";
 
     <h2>Check</h2>
     <ul>
-        <li>En stock ? <?= isInStock($stock) ? "true" : "false" ?></li>
-        <li>En promo ? <?= isOnSale($remise) ? "true" : "false" ?></li>
-        <li>Nouveau ? <?= isNew($dateAdded) ? "true" : "false" ?></li>
-        <li>Commande possible (2) ? <?= canOrder($stock, 2) ? "true" : "false" ?></li>
+        <li>En stock ? <?= isInStock($stock) ? 'true' : 'false' ?></li>
+        <li>En promo ? <?= isOnSale($remise) ? 'true' : 'false' ?></li>
+        <li>Nouveau ? <?= isNew($dateAdded) ? 'true' : 'false' ?></li>
+        <li>Commande possible (2) ? <?= canOrder($stock, 2) ? 'true' : 'false' ?></li>
     </ul>
 
     <h2>Affichage HTML avec fonctions</h2>
-    <p><?= displayBadge("Promo -{$remise}%", "#8e44ad") ?></p>
+    <p><?= displayBadge("Promo -{$remise}%", '#8e44ad') ?></p>
     <p>Prix : <?= displayPrice($prixTTC, $remise) ?></p>
     <p>Stock : <?= displayStock($stock) ?></p>
 

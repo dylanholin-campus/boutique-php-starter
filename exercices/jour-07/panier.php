@@ -3,9 +3,9 @@ declare(strict_types=1);
 session_start();
 
 $pdo = new PDO(
-    "mysql:host=localhost;dbname=boutique;charset=utf8mb4",
-    "dev",
-    "dev",
+    'mysql:host=localhost;dbname=boutique;charset=utf8mb4',
+    'dev',
+    'dev',
     [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

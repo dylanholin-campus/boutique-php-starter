@@ -1,29 +1,29 @@
 <?php
 try {
     $pdo = new PDO(
-        "mysql:host=localhost;dbname=boutique;charset=utf8mb4",
-        "dev",
-        "dev",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION] 
+        'mysql:host=localhost;dbname=boutique;charset=utf8mb4',
+        'dev',
+        'dev',
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
 } catch (PDOException $e) {
-    die("Erreur de connexion : " . $e->getMessage());
+    die('Erreur de connexion : ' . $e->getMessage());
 }
 
-$search = $_GET['q'] ?? ''; 
+$search = $_GET['q'] ?? '';
 
 $products = []; // tableau vide pour les résultats
 
 if ($search !== '') {
-    
+
     // On utilise prepare() au lieu de query() car on va utiliser une variable utilisateur ($search)
     // Le '?' sert de place réservée (placeholder)
-    $stmt = $pdo->prepare("SELECT * FROM products WHERE name LIKE ?"); 
-    
+    $stmt = $pdo->prepare('SELECT * FROM products WHERE name LIKE ?');
+
     // On exécute la requête en "injectant" la vraie valeur à la place du '?'
     // Les % sont pour dire "qui contient ce mot" (avant ou après)
     $stmt->execute(['%' . $search . '%']);
-    
+
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);      // On récupère tous les résultats
 }
 ?>

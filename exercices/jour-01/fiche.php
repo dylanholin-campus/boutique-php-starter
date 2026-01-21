@@ -1,5 +1,5 @@
 <?php
-$name  = "Chaussures Nike Air Max";
+$name  = 'Chaussures Nike Air Max';
 $price = 99.99;
 $stock = 3;
 ?>
@@ -17,7 +17,7 @@ $stock = 3;
 
     <p>Prix : <?= $price ?> €</p>
 
-    <span><?= $stock > 0 ? "En stock" : "Rupture" ?></span>
+    <span><?= $stock > 0 ? 'En stock' : 'Rupture' ?></span>
 
 </body>
 

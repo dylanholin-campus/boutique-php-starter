@@ -34,7 +34,7 @@
 
     <?php
     require 'Product.php';
-    $produit = new Product(1, "Chaise", "Design Berlin", 150.0, 10, "Mobilier");
+    $produit = new Product(1, 'Chaise', 'Design Berlin', 150.0, 10, 'Mobilier');
     ?>
 
     <strong>

@@ -1,7 +1,7 @@
 <?php
 // Variables produit
-$name = "Chaussures Nike Air Max";
-$description = "Chaussures confortables pour un usage quotidien.";
+$name = 'Chaussures Nike Air Max';
+$description = 'Chaussures confortables pour un usage quotidien.';
 $priceExcludingTax = 99.99; // HT
 $vatPercent = 20;           // TVA en %
 $stock = 3;
@@ -17,8 +17,8 @@ $priceTTCFormatted = number_format($priceTTC, 2, '.', '');
 $vatAmountFormatted = number_format($vatAmount, 2, '.', '');
 
 // Badge Bootstrap (simple)
-$badgeClass = ($stock > 0) ? "text-bg-success" : "text-bg-danger";
-$badgeText  = ($stock > 0) ? "En stock ($stock)" : "Rupture de stock";
+$badgeClass = ($stock > 0) ? 'text-bg-success' : 'text-bg-danger';
+$badgeText  = ($stock > 0) ? "En stock ($stock)" : 'Rupture de stock';
 ?>
 <!doctype html>
 <html lang="fr">

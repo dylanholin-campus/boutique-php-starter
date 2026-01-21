@@ -1,10 +1,10 @@
 <?php
 
-$name = "Chaise en bois"; 
-$price = 29.99;        
-$price2 = "29.99";
-$stock = 12;            
-$onSale = true;          
+$name = 'Chaise en bois';
+$price = 29.99;
+$price2 = '29.99';
+$stock = 12;
+$onSale = true;
 
 var_dump($name);
 var_dump($price);

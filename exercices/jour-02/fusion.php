@@ -1,11 +1,12 @@
 <?php
-$clothes = ["T-shirt", "Jean", "Pull"];
-$accessories = ["Ceinture", "Montre", "Lunettes"];
+
+$clothes = ['T-shirt', 'Jean', 'Pull'];
+$accessories = ['Ceinture', 'Montre', 'Lunettes'];
 
 $tableaufusionner = array_merge($clothes, $accessories);
-array_unshift($tableaufusionner, "Veste");
+array_unshift($tableaufusionner, 'Veste');
 
-echo "<pre>";
+echo '<pre>';
 print_r($tableaufusionner);
-echo "</pre>";
+echo '</pre>';
 echo " Nombre total d'articles : " . count($tableaufusionner);

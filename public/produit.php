@@ -1,7 +1,7 @@
 <?php
 // public/produit.php
-require_once "../app/data.php";
-require_once "../app/helpers.php";
+require_once '../app/data.php';
+require_once '../app/helpers.php';
 
 // Récupération de l'ID depuis l'URL
 $id = $_GET['id'] ?? null;
@@ -25,7 +25,7 @@ if (!$product) {
 
 // Données du produit trouvé
 $name = $product['name'];
-$description = $product['description'] ?? "Aucune description disponible.";
+$description = $product['description'] ?? 'Aucune description disponible.';
 $priceHT = $product['price'];
 $stock = $product['stock'];
 $vatPercent = 20;

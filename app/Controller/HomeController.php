@@ -1,9 +1,10 @@
 <?php
+
 class HomeController
 {
     public function index(): void
     {
-        $title = "Bienvenue sur ma boutique";
+        $title = 'Bienvenue sur ma boutique';
         require __DIR__ . '/../../views/home/index.php';
     }
 }

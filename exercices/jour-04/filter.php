@@ -1,15 +1,15 @@
 <?php
 $products = [
-    ["name" => "T-shirt", "stock" => 50, "price" => 29.99, "category" => "Vêtements"],
-    ["name" => "Jean", "stock" => 30, "price" => 59.99, "category" => "Vêtements"],
-    ["name" => "Casquette", "stock" => 100, "price" => 14.99, "category" => "Accessoires"],
-    ["name" => "Patate", "stock" => 17, "price" => 1.99, "category" => "Alimentation"],
-    ["name" => "Laptop", "stock" => 5, "price" => 999.99, "category" => "Électronique"],
-    ["name" => "Chaussettes", "stock" => 0, "price" => 5.00, "category" => "Vêtements"],
-    ["name" => "Souris Gamer", "stock" => 12, "price" => 45.00, "category" => "Électronique"],
-    ["name" => "Clavier", "stock" => 8, "price" => 120.00, "category" => "Électronique"],
-    ["name" => "Stylo", "stock" => 200, "price" => 2.50, "category" => "Bureautique"],
-    ["name" => "Lampe", "stock" => 0, "price" => 25.00, "category" => "Décoration"]
+    ['name' => 'T-shirt', 'stock' => 50, 'price' => 29.99, 'category' => 'Vêtements'],
+    ['name' => 'Jean', 'stock' => 30, 'price' => 59.99, 'category' => 'Vêtements'],
+    ['name' => 'Casquette', 'stock' => 100, 'price' => 14.99, 'category' => 'Accessoires'],
+    ['name' => 'Patate', 'stock' => 17, 'price' => 1.99, 'category' => 'Alimentation'],
+    ['name' => 'Laptop', 'stock' => 5, 'price' => 999.99, 'category' => 'Électronique'],
+    ['name' => 'Chaussettes', 'stock' => 0, 'price' => 5.00, 'category' => 'Vêtements'],
+    ['name' => 'Souris Gamer', 'stock' => 12, 'price' => 45.00, 'category' => 'Électronique'],
+    ['name' => 'Clavier', 'stock' => 8, 'price' => 120.00, 'category' => 'Électronique'],
+    ['name' => 'Stylo', 'stock' => 200, 'price' => 2.50, 'category' => 'Bureautique'],
+    ['name' => 'Lampe', 'stock' => 0, 'price' => 25.00, 'category' => 'Décoration']
 ];
 
 $totalProduits = count($products);

@@ -24,14 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
 if (isset($_GET['del'])) {
     $id = (int)$_GET['del'];
     unset($_SESSION['cart'][$id]);
-    header("Location: panier.php");
+    header('Location: panier.php');
     exit;
 }
 
 // 3. Vider le panier
 if (isset($_GET['empty'])) {
     $_SESSION['cart'] = [];
-    header("Location: panier.php");
+    header('Location: panier.php');
     exit;
 }
 
@@ -43,7 +43,7 @@ if (!empty($_SESSION['cart'])) {
     $ids = array_keys($_SESSION['cart']);
     $placeholders = str_repeat('?,', count($ids) - 1) . '?';
     $sql = "SELECT * FROM products WHERE id IN ($placeholders)";
-    
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute($ids);
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -52,7 +52,7 @@ if (!empty($_SESSION['cart'])) {
         $id = $product['id'];
         $qty = $_SESSION['cart'][$id];
         $price = $product['price'];
-        
+
         $lineTotal = $price * $qty;
         $totalHT += $lineTotal;
 
@@ -91,7 +91,7 @@ $totalTTC = calculateIncludingTax($totalHT, $tva);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($cartItems as $item): 
+                    <?php foreach ($cartItems as $item):
                         $p = $item['product'];
                         $priceTTC = calculateIncludingTax($p['price'], $tva);
                         $lineTTC = calculateIncludingTax($item['lineTotal'], $tva);

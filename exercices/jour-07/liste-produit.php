@@ -1,18 +1,18 @@
 <?php
 try {
     $pdo = new PDO(
-        "mysql:host=localhost;dbname=boutique;charset=utf8mb4",
-        "dev",
-        "dev",
+        'mysql:host=localhost;dbname=boutique;charset=utf8mb4',
+        'dev',
+        'dev',
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION] // "Si quelque chose se passe mal, lève une exception (erreur attrapable) au lieu de te taire."
     );
 
-    $stmt = $pdo->query("SELECT * FROM products");  // "Donne‑moi toutes les colonnes de toutes les lignes de la table products
-                                 //  Préparer et exécuter la requête  "Hé MySQL, exécute cette requête, et renvoie-moi un objet pour lire le résultat."
+    $stmt = $pdo->query('SELECT * FROM products');  // "Donne‑moi toutes les colonnes de toutes les lignes de la table products
+    //  Préparer et exécuter la requête  "Hé MySQL, exécute cette requête, et renvoie-moi un objet pour lire le résultat."
 
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);     // Récupérer TOUTES les lignes en tableau associatif
 } catch (PDOException $e) {
-    die("❌ Erreur : " . $e->getMessage());
+    die('❌ Erreur : ' . $e->getMessage());
 }
 ?>
 <!DOCTYPE html>
@@ -37,9 +37,9 @@ try {
         <tbody>
             <?php foreach ($products as $product): ?>
                 <tr>
-                    <td><?= htmlspecialchars($product["name"]) ?></td>
-                    <td><?= htmlspecialchars($product["price"]) ?> €</td>
-                    <td><?= htmlspecialchars($product["stock"]) ?></td>
+                    <td><?= htmlspecialchars($product['name']) ?></td>
+                    <td><?= htmlspecialchars($product['price']) ?> €</td>
+                    <td><?= htmlspecialchars($product['stock']) ?></td>
                 </tr>
             <?php endforeach; ?>
             <p>fetch() : Récupère une seule ligne à la fois, la "prochaine" du résultat</p>

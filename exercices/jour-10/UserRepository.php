@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 class UserRepository
 {
-    public function __construct(private PDO $pdo) {}
+    public function __construct(private PDO $pdo)
+    {
+    }
 
     /**
      * Enregistre un nouvel utilisateur.
@@ -15,10 +17,10 @@ class UserRepository
         // password_hash crée une empreinte sécurisée (ex: $2y$10$Of...)
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $this->pdo->prepare("
+        $stmt = $this->pdo->prepare('
             INSERT INTO users (nom, email, password, role) 
             VALUES (:nom, :email, :password, :role)
-        ");
+        ');
 
         $stmt->execute([
             ':nom' => $nom,
@@ -36,11 +38,11 @@ class UserRepository
      */
     public function findByEmail(string $email): ?array
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt = $this->pdo->prepare('SELECT * FROM users WHERE email = :email');
         $stmt->execute([':email' => $email]);
-        
+
         $user = $stmt->fetch();
-        
+
         // Si fetch() renvoie false, on retourne null, sinon on retourne le tableau
         return $user === false ? null : $user;
     }
@@ -50,21 +52,21 @@ class UserRepository
 // (Vérifie bien ton mot de passe, ici j'ai mis vide "")
 try {
     $pdo = new PDO(
-        "mysql:host=localhost;dbname=boutique;charset=utf8mb4",
-        "dev",
-        "dev", 
+        'mysql:host=localhost;dbname=boutique;charset=utf8mb4',
+        'dev',
+        'dev',
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ]
     );
 } catch (PDOException $e) {
-    die("Erreur de connexion : " . $e->getMessage());
+    die('Erreur de connexion : ' . $e->getMessage());
 }
 
 $repo = new UserRepository($pdo);
-$emailTest = "test_user@boutique.fr";
-$passwordTest = "MonSuperMotDePasse123";
+$emailTest = 'test_user@boutique.fr';
+$passwordTest = 'MonSuperMotDePasse123';
 
 // -- B. Nettoyage (pour pouvoir rejouer le test sans erreur "Duplicate entry") --
 $pdo->exec("DELETE FROM users WHERE email = '$emailTest'");
@@ -90,23 +92,23 @@ $pdo->exec("DELETE FROM users WHERE email = '$emailTest'");
     <h3>1. Création de l'utilisateur (Save)</h3>
     <?php
     try {
-        $newId = $repo->save("Utilisateur Test", $emailTest, $passwordTest, "user");
+        $newId = $repo->save('Utilisateur Test', $emailTest, $passwordTest, 'user');
         echo "<div class='success'>[OK] Utilisateur créé avec l'ID : $newId</div>";
     } catch (Exception $e) {
-        echo "<div class='fail'>[ERREUR] " . $e->getMessage() . "</div>";
+        echo "<div class='fail'>[ERREUR] " . $e->getMessage() . '</div>';
     }
     ?>
 
     <h3>2. Récupération (findByEmail)</h3>
     <?php
     $user = $repo->findByEmail($emailTest);
-    
+
     if ($user) {
         echo "<div class='success'>[OK] Utilisateur trouvé en base !</div>";
-        echo "<p>Voici ce qui est stocké en base :</p>";
-        echo "<pre>";
+        echo '<p>Voici ce qui est stocké en base :</p>';
+        echo '<pre>';
         print_r($user);
-        echo "</pre>";
+        echo '</pre>';
     } else {
         echo "<div class='fail'>[ERREUR] L'utilisateur n'a pas été trouvé.</div>";
     }

@@ -7,12 +7,12 @@ Greetings
 */
 function greet(): void
 {
-    echo "Bienvenue sur la boutique !";
+    echo 'Bienvenue sur la boutique !';
 }
 
 function greetClient(string $name): void
 {
-    echo "Bonjour " . htmlspecialchars($name) . " !";
+    echo 'Bonjour ' . htmlspecialchars($name) . ' !';
 }
 
 /*
@@ -29,7 +29,7 @@ function calculateIncludingTax(float $priceExcludingTax, float $rate): float
 }
 
 
-function formatPrice(float $price, string $currency = "€"): string
+function formatPrice(float $price, string $currency = '€'): string
 {
     return number_format($price, 2, ',', ' ') . ' ' . $currency;
 }
@@ -64,7 +64,7 @@ function canOrder(int $stock, int $quantity): bool
     return $stock >= $quantity;
 }
 
-/* 
+/*
 Affichage HTML
 */
 function displayBadge(string $text, string $color): string
@@ -74,13 +74,13 @@ function displayBadge(string $text, string $color): string
         . '</span>';
 }
 
-function displayPrice(float $price, float $discount = 0, string $currency = "€"): string
+function displayPrice(float $price, float $discount = 0, string $currency = '€'): string
 {
-    $formattedPrice = formatPrice($price, $currency, 2);
+    $formattedPrice = formatPrice($price, $currency);
 
     if ($discount > 0) {
         $newPrice = calculateDiscount($price, $discount);
-        $formattedNew = formatPrice($newPrice, $currency, 2);
+        $formattedNew = formatPrice($newPrice, $currency);
 
         return '<span style="text-decoration: line-through; color:#6c757d;">' . $formattedPrice . '</span> '
             . '<strong style="color:#e74c3c;">' . $formattedNew . '</strong>';

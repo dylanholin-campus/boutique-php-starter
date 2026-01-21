@@ -1,14 +1,15 @@
 <?php
+
 $age = 26;
 
 if ($age < 18) {
-    $statut = "Mineur";
+    $statut = 'Mineur';
 } elseif ($age <= 25) {
-    $statut = "Young adult";
+    $statut = 'Young adult';
 } elseif ($age <= 64) {
-    $statut = "Adult";
+    $statut = 'Adult';
 } else {
-    $statut = "Senior";
+    $statut = 'Senior';
 }
 
 echo $statut;

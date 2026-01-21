@@ -1,9 +1,10 @@
 <?php
+
 $a = 0;
-$b = "";
+$b = '';
 $c = null;
 $d = false;
-$e = "0";
+$e = '0';
 
 if ($a == $a) {
     $statut = "$a == $a est vrai <br>";

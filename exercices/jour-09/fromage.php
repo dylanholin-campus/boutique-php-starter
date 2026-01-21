@@ -73,12 +73,12 @@ class weight
     }
 }
 
-$categorieFromages = new Category("Fromages");
+$categorieFromages = new Category('Fromages');
 
-$produitBrie = new Product("Brie", 3.50, $categorieFromages);
-$produitComte = new Product("Comté", 4.20, $categorieFromages);
-$produitRoquefort = new Product("Roquefort", 5.10, $categorieFromages);
-$produitEmmental = new Product("Emmental", 2.10, $categorieFromages);
+$produitBrie = new Product('Brie', 3.50, $categorieFromages);
+$produitComte = new Product('Comté', 4.20, $categorieFromages);
+$produitRoquefort = new Product('Roquefort', 5.10, $categorieFromages);
+$produitEmmental = new Product('Emmental', 2.10, $categorieFromages);
 
 $quantityBrie = new quantity($produitBrie, 2);
 $quantityComte = new quantity($produitComte, 1);
@@ -92,23 +92,23 @@ $weightEmmental = new weight($produitEmmental, 5);
 
 function afficherLigne($weightLocal, $quantityLocal)
 {
-    echo " - " . $weightLocal->weight . " Kilo - "
-        . $quantityLocal->product->nom . " (" . $quantityLocal->product->category->nom . ") x" . $quantityLocal->quantite
-        . " = " . number_format($quantityLocal->getTotal(), 2) . " €<br>";
+    echo ' - ' . $weightLocal->weight . ' Kilo - '
+        . $quantityLocal->product->nom . ' (' . $quantityLocal->product->category->nom . ') x' . $quantityLocal->quantite
+        . ' = ' . number_format($quantityLocal->getTotal(), 2) . ' €<br>';
 }
 
 afficherLigne($weightBrie, $quantityBrie);
 afficherLigne($weightComte, $quantityComte);
 afficherLigne($weightRoquefort, $quantityRoquefort);
 afficherLigne($weightEmmental, $quantityEmmental);
-echo "<br>";
+echo '<br>';
 
 
 $quantityComte->incrementequantity(2);
 $quantityRoquefort->decrementequantity(1);
 $weightEmmental->decrementeweight(2.5);
 
-echo "Après modification :<br>";
-echo $quantityComte->product->nom . " x" . $quantityComte->quantite . " = " . number_format($quantityComte->getTotal(), 2) . " €<br>";
-echo $quantityRoquefort->product->nom . " x" . $quantityRoquefort->quantite . " = " . number_format($quantityRoquefort->getTotal(), 2) . " €<br>";
-echo " Nouveau poids de " . $quantityEmmental->product->nom . " - " . $weightEmmental->weight . " Kilo - <br>";
+echo 'Après modification :<br>';
+echo $quantityComte->product->nom . ' x' . $quantityComte->quantite . ' = ' . number_format($quantityComte->getTotal(), 2) . ' €<br>';
+echo $quantityRoquefort->product->nom . ' x' . $quantityRoquefort->quantite . ' = ' . number_format($quantityRoquefort->getTotal(), 2) . ' €<br>';
+echo ' Nouveau poids de ' . $quantityEmmental->product->nom . ' - ' . $weightEmmental->weight . ' Kilo - <br>';

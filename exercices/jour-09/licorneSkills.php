@@ -53,15 +53,15 @@ final class Product
     }
 }
 
-$peluches = new Category("Peluches Licornes");
-$accessoires = new Category("Accessoires Magiques");
+$peluches = new Category('Peluches Licornes');
+$accessoires = new Category('Accessoires Magiques');
 
-new Product("Licorne Rose en Peluche", $peluches);
-new Product("Couronne de Licorne", $accessoires);
+new Product('Licorne Rose en Peluche', $peluches);
+new Product('Couronne de Licorne', $accessoires);
 
 foreach ([$peluches, $accessoires] as $category) {
-    echo "<h3>Catégorie : " . htmlspecialchars($category->getName()) . "</h3>";
+    echo '<h3>Catégorie : ' . htmlspecialchars($category->getName()) . '</h3>';
     foreach ($category->getProducts() as $product) {
-        echo "Produit : " . htmlspecialchars($product->getName()) . "<br>";
+        echo 'Produit : ' . htmlspecialchars($product->getName()) . '<br>';
     }
 }

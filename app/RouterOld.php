@@ -1,4 +1,5 @@
 <?php
+
 class Router
 {
     private array $routes = [   // La structure finale ressemble à :
@@ -29,8 +30,6 @@ class Router
         }
 
         http_response_code(404);
-        echo "Page non trouvée";
+        echo 'Page non trouvée';
     }
 }
-
-

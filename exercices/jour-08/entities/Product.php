@@ -1,6 +1,7 @@
 <?php
 
-class Product {
+class Product
+{
     public $id;
     public $nom;
     public $description;
@@ -8,7 +9,8 @@ class Product {
     public $stock;
     public $categorie;
 
-    public function __construct($id, $nom, $description, $prix, $stock, $categorie) {
+    public function __construct($id, $nom, $description, $prix, $stock, $categorie)
+    {
         $this->id = $id;
         $this->nom = $nom;
         $this->description = $description;
@@ -17,15 +19,18 @@ class Product {
         $this->categorie = $categorie;
     }
 
-    public function getPriceIncludingTax($vat = 20) {
+    public function getPriceIncludingTax($vat = 20)
+    {
         return $this->prix * (1 + $vat / 100);
     }
 
-    public function isInStock() {
+    public function isInStock()
+    {
         return $this->stock > 0;
     }
 
-    public function reduceStock($quantity) {
+    public function reduceStock($quantity)
+    {
         if ($quantity <= $this->stock) {
             $this->stock -= $quantity;
             return true;
@@ -33,9 +38,8 @@ class Product {
         return false;
     }
 
-    public function applyDiscount($percentage) {
+    public function applyDiscount($percentage)
+    {
         $this->prix *= (1 - $percentage / 100);
     }
 }
-
-?>

@@ -45,26 +45,26 @@ class CartController
         require __DIR__ . '/../../views/cart/index.php';
     }
 
-public function add(): void
-{
-    $id  = (int)($_POST['id'] ?? 0);
-    $qty = max(1, (int)($_POST['qty'] ?? 1));
+    public function add(): void
+    {
+        $id  = (int)($_POST['id'] ?? 0);
+        $qty = max(1, (int)($_POST['qty'] ?? 1));
 
-    $repo = new ProductRepository();
-    if ($id <= 0 || $repo->find($id) === null) {
-        flash('error', 'Produit introuvable.');
-        redirect('/panier');
+        $repo = new ProductRepository();
+        if ($id <= 0 || $repo->find($id) === null) {
+            flash('error', 'Produit introuvable.');
+            redirect('/panier');
+        }
+
+        $cart = $this->getCart();
+        $cart[$id] = ($cart[$id] ?? 0) + $qty;
+        $this->saveCart($cart);
+
+        flash('success', 'Produit ajouté au panier.');
+        $back = $_SERVER['HTTP_REFERER'] ?? '/produits';
+        header('Location: ' . $back);
+        exit;
     }
-
-    $cart = $this->getCart();
-    $cart[$id] = ($cart[$id] ?? 0) + $qty;
-    $this->saveCart($cart);
-
-    flash('success', 'Produit ajouté au panier.');
-$back = $_SERVER['HTTP_REFERER'] ?? '/produits';
-header('Location: ' . $back);
-exit;
-}
 
 
     public function remove(): void

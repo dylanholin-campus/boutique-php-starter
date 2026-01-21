@@ -1,4 +1,5 @@
 <?php
+
 class Product
 {
     private string $name;
@@ -29,11 +30,11 @@ class Product
 }
 
 $products = [
-    new Product("Laptop", 999.99, 5),
-    new Product("Mouse", 25.50, 15),
-    new Product("Keyboard", 79.99, 8),
-    new Product("Monitor", 299.99, 3),
-    new Product("Headphones", 149.99, 12)
+    new Product('Laptop', 999.99, 5),
+    new Product('Mouse', 25.50, 15),
+    new Product('Keyboard', 79.99, 8),
+    new Product('Monitor', 299.99, 3),
+    new Product('Headphones', 149.99, 12)
 ];
 
 $totalStock = 0;
@@ -47,6 +48,6 @@ foreach ($products as $product) {
 }
 
 
-echo "<br><br>--- RÉSUMÉ ---<br>";
+echo '<br><br>--- RÉSUMÉ ---<br>';
 echo "<br>Stock total: {$totalStock} unités<br>";
 echo "<br>Valeur totale du catalogue: {$totalValue}€<br>";

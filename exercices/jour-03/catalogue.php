@@ -1,52 +1,52 @@
 <?php
 $products = [
     [
-        "name" => "RTX 5090",
-        "price" => 1999.99,
-        "stock" => 0,
-        "image" => "https://placehold.co/200x150?text=GPU"
+        'name' => 'RTX 5090',
+        'price' => 1999.99,
+        'stock' => 0,
+        'image' => 'https://placehold.co/200x150?text=GPU'
     ],
     [
-        "name" => "Clavier Mécanique",
-        "price" => 149.50,
-        "stock" => 12,
-        "image" => "https://placehold.co/200x150?text=Clavier"
+        'name' => 'Clavier Mécanique',
+        'price' => 149.50,
+        'stock' => 12,
+        'image' => 'https://placehold.co/200x150?text=Clavier'
     ],
     [
-        "name" => "Écran 4K OLED",
-        "price" => 899.00,
-        "stock" => 3,
-        "image" => "https://placehold.co/200x150?text=Ecran"
+        'name' => 'Écran 4K OLED',
+        'price' => 899.00,
+        'stock' => 3,
+        'image' => 'https://placehold.co/200x150?text=Ecran'
     ],
     [
-        "name" => "Souris Gaming",
-        "price" => 59.90,
-        "stock" => 25,
-        "image" => "https://placehold.co/200x150?text=Souris"
+        'name' => 'Souris Gaming',
+        'price' => 59.90,
+        'stock' => 25,
+        'image' => 'https://placehold.co/200x150?text=Souris'
     ],
     [
-        "name" => "Casque Audio",
-        "price" => 199.99,
-        "stock" => 0,
-        "image" => "https://placehold.co/200x150?text=Casque"
+        'name' => 'Casque Audio',
+        'price' => 199.99,
+        'stock' => 0,
+        'image' => 'https://placehold.co/200x150?text=Casque'
     ],
     [
-        "name" => "Support Laptop",
-        "price" => 39.99,
-        "stock" => 10,
-        "image" => "https://placehold.co/200x150?text=Support"
+        'name' => 'Support Laptop',
+        'price' => 39.99,
+        'stock' => 10,
+        'image' => 'https://placehold.co/200x150?text=Support'
     ],
     [
-        "name" => "Câble HDMI 2.1",
-        "price" => 15.00,
-        "stock" => 100,
-        "image" => "https://placehold.co/200x150?text=Cable"
+        'name' => 'Câble HDMI 2.1',
+        'price' => 15.00,
+        'stock' => 100,
+        'image' => 'https://placehold.co/200x150?text=Cable'
     ],
     [
-        "name" => "Webcam 1080p",
-        "price" => 75.50,
-        "stock" => 8,
-        "image" => "https://placehold.co/200x150?text=Webcam"
+        'name' => 'Webcam 1080p',
+        'price' => 75.50,
+        'stock' => 8,
+        'image' => 'https://placehold.co/200x150?text=Webcam'
     ],
 ];
 ?>

@@ -31,7 +31,7 @@ class ProductRepository
 
     public function find($id)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM products WHERE id = :id");
+        $stmt = $this->pdo->prepare('SELECT * FROM products WHERE id = :id');
         $stmt->execute(['id' => $id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -51,7 +51,7 @@ class ProductRepository
 
     public function findAll()
     {
-        $stmt = $this->pdo->query("SELECT * FROM products");
+        $stmt = $this->pdo->query('SELECT * FROM products');
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $products = [];
@@ -72,8 +72,8 @@ class ProductRepository
     public function save($product)
     {
         if ($product->id === null) {
-            $sql = "INSERT INTO products (name, description, price, stock, category_id)
-                    VALUES (:name, :desc, :price, :stock, :cat)";
+            $sql = 'INSERT INTO products (name, description, price, stock, category_id)
+                    VALUES (:name, :desc, :price, :stock, :cat)';
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([
                 'name' => $product->name,
@@ -85,9 +85,9 @@ class ProductRepository
 
             $product->id = $this->pdo->lastInsertId();
         } else {
-            $sql = "UPDATE products
+            $sql = 'UPDATE products
                     SET name = :name, description = :desc, price = :price, stock = :stock, category_id = :cat
-                    WHERE id = :id";
+                    WHERE id = :id';
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([
                 'id'    => $product->id,
@@ -103,13 +103,13 @@ class ProductRepository
     // AJOUT NECESSAIRE POUR CRUD COMPLET : DELETE
     public function delete($id)
     {
-        $stmt = $this->pdo->prepare("DELETE FROM products WHERE id = :id");
+        $stmt = $this->pdo->prepare('DELETE FROM products WHERE id = :id');
         $stmt->execute(['id' => $id]);
     }
 }
 
 // ====== Connexion + Repository (injection PDO) ======
-$pdo = new PDO("mysql:host=localhost;dbname=boutique;charset=utf8mb4", "dev", "dev");
+$pdo = new PDO('mysql:host=localhost;dbname=boutique;charset=utf8mb4', 'dev', 'dev');
 $repo = new ProductRepository($pdo);
 
 // ====== Variables d'affichage ======
@@ -118,7 +118,8 @@ $found = null;
 $all = null;
 
 // Petits helpers d’affichage (optionnel)
-function e($value) {
+function e($value)
+{
     return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
 }
 
@@ -148,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'findAll') {
         $all = $repo->findAll();
-        $message = "READ (findAll) OK — " . count($all) . " produit(s) chargé(s).";
+        $message = 'READ (findAll) OK — ' . count($all) . ' produit(s) chargé(s).';
     }
 
     if ($action === 'update') {

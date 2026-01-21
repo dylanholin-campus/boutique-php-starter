@@ -3,8 +3,8 @@ $nom = $_GET['name'] ?? 'visiteur';
 
 $age = $_GET['age'] ?? null;
 
-if (empty($nom) ) {
-    $nom = "visiteur";
+if (empty($nom)) {
+    $nom = 'visiteur';
 }
 
 $nomPropre = htmlspecialchars($nom);

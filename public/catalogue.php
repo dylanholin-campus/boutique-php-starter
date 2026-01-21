@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../app/helpers.php"; // Vos fonctions d'aide
+require_once '../app/helpers.php'; // Vos fonctions d'aide
 
 // TENTATIVE DE CONNEXION BDD (Chemin absolu pour éviter les erreurs)
 $dbPath = '../config/database.php';
@@ -19,25 +19,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add'])) {
 }
 
 // --- RECUPERATION PRODUITS (SQL au lieu de data.php) ---
-$sql = "SELECT * FROM products WHERE 1=1";
+$sql = 'SELECT * FROM products WHERE 1=1';
 $params = [];
 
 // Filtre Recherche
 if (!empty($_GET['q'])) {
-    $sql .= " AND name LIKE ?";
-    $params[] = "%" . $_GET['q'] . "%";
+    $sql .= ' AND name LIKE ?';
+    $params[] = '%' . $_GET['q'] . '%';
 }
 
 // Filtre Catégorie (Version compatible avec votre BDD avancée)
 // On fait une jointure car 'category' est une table séparée maintenant
 if (!empty($_GET['category'])) {
-    $sql = "SELECT p.* FROM products p 
+    $sql = 'SELECT p.* FROM products p 
             JOIN categories c ON p.category_id = c.id 
-            WHERE c.slug = ?";
+            WHERE c.slug = ?';
     // Si recherche aussi présente
     if (!empty($_GET['q'])) {
-        $sql .= " AND p.name LIKE ?";
-        $params = [$_GET['category'], "%" . $_GET['q'] . "%"];
+        $sql .= ' AND p.name LIKE ?';
+        $params = [$_GET['category'], '%' . $_GET['q'] . '%'];
     } else {
         $params = [$_GET['category']];
     }
@@ -48,7 +48,7 @@ try {
     $stmt->execute($params);
     $filteredProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die("ERREUR SQL : " . $e->getMessage());
+    die('ERREUR SQL : ' . $e->getMessage());
 }
 ?>
 
@@ -100,9 +100,9 @@ try {
             <?php foreach ($filteredProducts as $product): ?>
                 <div class="col-md-4">
                     <div class="produit h-100 d-flex flex-column">
-                        <h2><?= htmlspecialchars($product["name"]) ?></h2>
-                        <p><strong><?= number_format(calculateIncludingTax($product["price"], $tva), 2) ?> €</strong></p>
-                        <p><?= displayStock($product["stock"]) ?></p>
+                        <h2><?= htmlspecialchars($product['name']) ?></h2>
+                        <p><strong><?= number_format(calculateIncludingTax($product['price'], $tva), 2) ?> €</strong></p>
+                        <p><?= displayStock($product['stock']) ?></p>
 
                         <div class="mt-auto d-grid gap-2">
                             <a href="produit.php?id=<?= $product['id'] ?>" class="btn btn-sm btn-dark">Détails</a>

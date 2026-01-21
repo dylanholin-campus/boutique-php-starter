@@ -1,40 +1,39 @@
 <?php
 try {
     $pdo = new PDO(
-        "mysql:host=localhost;dbname=boutique;charset=utf8mb4",
-        "dev",
-        "dev",
+        'mysql:host=localhost;dbname=boutique;charset=utf8mb4',
+        'dev',
+        'dev',
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
 
     // 1. CREATE - Ajouter un produit (POST)
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"]) && $_POST["action"] === "add") {
-        $stmt = $pdo->prepare("INSERT INTO products (name, description, price, stock, category) VALUES (?, ?, ?, ?, ?)");
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add') {
+        $stmt = $pdo->prepare('INSERT INTO products (name, description, price, stock, category) VALUES (?, ?, ?, ?, ?)');
         $stmt->execute([
-            $_POST["name"],
-            $_POST["description"],
-            $_POST["price"],
-            $_POST["stock"],
-            $_POST["category"]
+            $_POST['name'],
+            $_POST['description'],
+            $_POST['price'],
+            $_POST['stock'],
+            $_POST['category']
         ]);
-        header("Location: admin-produits.php");
+        header('Location: admin-produits.php');
         exit;
     }
 
     // 2. DELETE - Supprimer un produit (GET)
-    if (isset($_GET["delete"])) {
-        $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
-        $stmt->execute([$_GET["delete"]]);
-        header("Location: admin-produits.php");
+    if (isset($_GET['delete'])) {
+        $stmt = $pdo->prepare('DELETE FROM products WHERE id = ?');
+        $stmt->execute([$_GET['delete']]);
+        header('Location: admin-produits.php');
         exit;
     }
 
     // 3. Récupérer tous les produits
-    $stmt = $pdo->query("SELECT * FROM products ORDER BY created_at DESC");
+    $stmt = $pdo->query('SELECT * FROM products ORDER BY created_at DESC');
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 } catch (PDOException $e) {
-    die("Erreur : " . $e->getMessage());
+    die('Erreur : ' . $e->getMessage());
 }
 ?>
 <!DOCTYPE html>

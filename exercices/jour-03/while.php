@@ -6,7 +6,7 @@ while ($i <= 10) {
     $i = $i + 1;
 }
 
-echo "<br>";
+echo '<br>';
 
 $o = 2;
 while ($o <= 20) {
@@ -14,7 +14,7 @@ while ($o <= 20) {
     $o = $o + 2;
 }
 
-echo "<br>";
+echo '<br>';
 
 $z = 10;
 while ($z >= 0) {
@@ -22,7 +22,7 @@ while ($z >= 0) {
     $z = $z - 1;
 }
 
-echo "<br>";
+echo '<br>';
 
 $f = 1;
 while ($f <= 10) {

@@ -16,7 +16,7 @@ function calculateTotal($panier)
 {
     $total = 0;
     foreach ($panier as $article) {
-        $total += $article['price'] * $article['quantity']; // c'est equivalent a ça : 
+        $total += $article['price'] * $article['quantity']; // c'est equivalent a ça :
         //$total = $total + ($article['price'] * $article['quantity']);
     }
     return $total;
@@ -107,14 +107,14 @@ function dump_and_die_patate(...$variables)
         var_dump($var);
         echo '</pre>';
     }
-    die("FIN DU SCRIPT (Arrêt demandé)");
+    die('FIN DU SCRIPT (Arrêt demandé)');
 }
 
 // MES DONNÉES
 
 $prixBureau = 100.00;
-$monEmail = "theo@test.fr";
-$dateAchat = "2025-01-15";
+$monEmail = 'theo@test.fr';
+$dateAchat = '2025-01-15';
 
 $monProduit = [
     'name' => 'Chaise Gamer',
@@ -188,9 +188,9 @@ $monPanier = [
             L'email "theo@test.fr" est-il valide ?
             <?php
             if (validateEmail($monEmail)) {
-                echo "OUI";
+                echo 'OUI';
             } else {
-                echo "NON";
+                echo 'NON';
             }
             ?>
         </li>
@@ -198,7 +198,7 @@ $monPanier = [
             Le prix "-10" est-il valide ?
             <?php
             if (validatePrice(-10)) {
-                echo "OUI";
+                echo 'OUI';
             } else {
                 echo "NON (c'est normal)";
             }
@@ -213,7 +213,7 @@ $monPanier = [
     <hr>
 
     <?php
-    dump_and_die_patate($monProduit, "Ceci est un test de fin");
+    dump_and_die_patate($monProduit, 'Ceci est un test de fin');
     ?>
 
     <p>CE TEXTE NE S'AFFICHERA JAMAIS CAR LE SCRIPT EST MORT AVANT.</p>

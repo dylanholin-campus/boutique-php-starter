@@ -1,53 +1,54 @@
 <?php
 $products = [
-    ["name" => "Ordinateur Portable", "category" => "Informatique", "price" => 800],
-    ["name" => "Smartphone", "category" => "Téléphonie", "price" => 500],
-    ["name" => "Casque Audio", "category" => "Audio", "price" => 100],
-    ["name" => "Clavier Mécanique", "category" => "Informatique", "price" => 60],
-    ["name" => "Souris Gamer", "category" => "Informatique", "price" => 40],
-    ["name" => "Écran 24 pouces", "category" => "Informatique", "price" => 150],
-    ["name" => "Tablette Graphique", "category" => "Informatique", "price" => 200],
-    ["name" => "Chargeur USB-C", "category" => "Accessoires", "price" => 20],
-    ["name" => "Câble HDMI", "category" => "Accessoires", "price" => 10],
-    ["name" => "Webcam HD", "category" => "Informatique", "price" => 50],
-    ["name" => "Microphone USB", "category" => "Audio", "price" => 80],
-    ["name" => "Enceinte Bluetooth", "category" => "Audio", "price" => 45],
-    ["name" => "Disque Dur Externe", "category" => "Stockage", "price" => 70],
-    ["name" => "Clé USB 64Go", "category" => "Stockage", "price" => 15],
-    ["name" => "Routeur Wi-Fi", "category" => "Réseau", "price" => 60],
-    ["name" => "Répéteur Wi-Fi", "category" => "Réseau", "price" => 30],
-    ["name" => "Imprimante Laser", "category" => "Bureau", "price" => 120],
-    ["name" => "Cartouches d'encre", "category" => "Bureau", "price" => 40],
-    ["name" => "Papier A4", "category" => "Bureau", "price" => 5],
-    ["name" => "Chaise de Bureau", "category" => "Mobilier", "price" => 100],
-    ["name" => "Bureau d'angle", "category" => "Mobilier", "price" => 150],
-    ["name" => "Lampe LED", "category" => "Mobilier", "price" => 25],
-    ["name" => "Tapis de Souris", "category" => "Accessoires", "price" => 15],
-    ["name" => "Hub USB", "category" => "Accessoires", "price" => 25],
-    ["name" => "Sac à dos PC", "category" => "Accessoires", "price" => 40],
-    ["name" => "Support PC Portable", "category" => "Accessoires", "price" => 30],
-    ["name" => "Onduleur", "category" => "Informatique", "price" => 90],
-    ["name" => "Logiciel Antivirus", "category" => "Logiciel", "price" => 30],
-    ["name" => "Suite Bureautique", "category" => "Logiciel", "price" => 100],
-    ["name" => "Jeu Vidéo PC", "category" => "Loisirs", "price" => 50],
-    ["name" => "Manette de Jeu", "category" => "Loisirs", "price" => 40],
-    ["name" => "Casque VR", "category" => "Loisirs", "price" => 300],
+    ['name' => 'Ordinateur Portable', 'category' => 'Informatique', 'price' => 800],
+    ['name' => 'Smartphone', 'category' => 'Téléphonie', 'price' => 500],
+    ['name' => 'Casque Audio', 'category' => 'Audio', 'price' => 100],
+    ['name' => 'Clavier Mécanique', 'category' => 'Informatique', 'price' => 60],
+    ['name' => 'Souris Gamer', 'category' => 'Informatique', 'price' => 40],
+    ['name' => 'Écran 24 pouces', 'category' => 'Informatique', 'price' => 150],
+    ['name' => 'Tablette Graphique', 'category' => 'Informatique', 'price' => 200],
+    ['name' => 'Chargeur USB-C', 'category' => 'Accessoires', 'price' => 20],
+    ['name' => 'Câble HDMI', 'category' => 'Accessoires', 'price' => 10],
+    ['name' => 'Webcam HD', 'category' => 'Informatique', 'price' => 50],
+    ['name' => 'Microphone USB', 'category' => 'Audio', 'price' => 80],
+    ['name' => 'Enceinte Bluetooth', 'category' => 'Audio', 'price' => 45],
+    ['name' => 'Disque Dur Externe', 'category' => 'Stockage', 'price' => 70],
+    ['name' => 'Clé USB 64Go', 'category' => 'Stockage', 'price' => 15],
+    ['name' => 'Routeur Wi-Fi', 'category' => 'Réseau', 'price' => 60],
+    ['name' => 'Répéteur Wi-Fi', 'category' => 'Réseau', 'price' => 30],
+    ['name' => 'Imprimante Laser', 'category' => 'Bureau', 'price' => 120],
+    ['name' => "Cartouches d'encre", 'category' => 'Bureau', 'price' => 40],
+    ['name' => 'Papier A4', 'category' => 'Bureau', 'price' => 5],
+    ['name' => 'Chaise de Bureau', 'category' => 'Mobilier', 'price' => 100],
+    ['name' => "Bureau d'angle", 'category' => 'Mobilier', 'price' => 150],
+    ['name' => 'Lampe LED', 'category' => 'Mobilier', 'price' => 25],
+    ['name' => 'Tapis de Souris', 'category' => 'Accessoires', 'price' => 15],
+    ['name' => 'Hub USB', 'category' => 'Accessoires', 'price' => 25],
+    ['name' => 'Sac à dos PC', 'category' => 'Accessoires', 'price' => 40],
+    ['name' => 'Support PC Portable', 'category' => 'Accessoires', 'price' => 30],
+    ['name' => 'Onduleur', 'category' => 'Informatique', 'price' => 90],
+    ['name' => 'Logiciel Antivirus', 'category' => 'Logiciel', 'price' => 30],
+    ['name' => 'Suite Bureautique', 'category' => 'Logiciel', 'price' => 100],
+    ['name' => 'Jeu Vidéo PC', 'category' => 'Loisirs', 'price' => 50],
+    ['name' => 'Manette de Jeu', 'category' => 'Loisirs', 'price' => 40],
+    ['name' => 'Casque VR', 'category' => 'Loisirs', 'price' => 300],
 ];
 
 $allCategories = array_unique(array_column($products, 'category'));
 sort($allCategories);
 
-$search = $_GET["recherche"] ?? "";
-$categories = $_GET["category"] ?? [];
-$priceMin = $_GET["price_min"] ?? 0;
-$priceMax = (!empty($_GET["price_max"])) ? $_GET["price_max"] : 10000;
-$sort = $_GET["sort"] ?? "name_asc";
-$page = (int)($_GET["page"] ?? 1);
-if ($page < 1) $page = 1;
+$search = $_GET['recherche'] ?? '';
+$categories = $_GET['category'] ?? [];
+$priceMin = $_GET['price_min'] ?? 0;
+$priceMax = (!empty($_GET['price_max'])) ? $_GET['price_max'] : 10000;
+$sort = $_GET['sort'] ?? 'name_asc';
+$page = (int)($_GET['page'] ?? 1);
+if ($page < 1) {
+    $page = 1;
+}
 
 
 $results = array_filter($products, function ($product) use ($search, $categories, $priceMin, $priceMax) {
-
     if ($search && stripos($product['name'], $search) === false) {     // sert a faire de recherche par filtre dans les 3 IF
         return false;
     }
@@ -204,7 +205,7 @@ $paginatedResults = array_slice($results, ($page - 1) * $perPage, $perPage);
                 <label>Prix (€)</label>
                 <div class="price-inputs">
                     <input type="number" name="price_min" placeholder="Min" value="<?= htmlspecialchars($priceMin) ?>">
-                    <input type="number" name="price_max" placeholder="Max" value="<?= htmlspecialchars($_GET["price_max"] ?? '') ?>">
+                    <input type="number" name="price_max" placeholder="Max" value="<?= htmlspecialchars($_GET['price_max'] ?? '') ?>">
                 </div>
             </div>
 

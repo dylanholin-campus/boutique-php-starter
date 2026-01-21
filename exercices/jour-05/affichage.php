@@ -4,7 +4,7 @@ function displayBadge(string $text, string $color): string
     return '<span class="badge" style="background: ' . $color . ';">' . $text . '</span>';
 }
 
-function displayPrice(float $price, float $discount = 0, string $currency = "€"): string
+function displayPrice(float $price, float $discount = 0, string $currency = '€'): string
 {
     $formattedPrice = number_format($price, 2);
     if ($discount > 0) {
@@ -29,10 +29,10 @@ function displayStock(int $quantity): string
 
 // Exemple produit
 $product = [
-    "name" => "T-shirt",
-    "stock" => 10,
-    "price" => 29.99,
-    "discount" => 20
+    'name' => 'T-shirt',
+    'stock' => 10,
+    'price' => 29.99,
+    'discount' => 20
 ];
 ?>
 <!doctype html>
@@ -52,7 +52,7 @@ $product = [
     <p>Prix : <?= displayPrice($product['price'], $product['discount']) ?></p>
     <p>Stock : <?= displayStock($product['stock']) ?></p>
 
-    <p><?= displayBadge("Je sais pas quoi mettre ici", "#3498db") ?></p>
+    <p><?= displayBadge('Je sais pas quoi mettre ici', '#3498db') ?></p>
 </body>
 
 </html>

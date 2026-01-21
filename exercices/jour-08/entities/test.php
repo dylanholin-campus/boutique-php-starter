@@ -5,28 +5,28 @@ require_once 'Category.php';
 require_once 'User.php';
 
 // Créer les catégories
-$cat1 = new Category(1, "Électronique Grand Public", "Produits électroniques");
-$cat2 = new Category(2, "Accessoires Informatiques", "Souris, claviers, câbles");
+$cat1 = new Category(1, 'Électronique Grand Public', 'Produits électroniques');
+$cat2 = new Category(2, 'Accessoires Informatiques', 'Souris, claviers, câbles');
 
 // Créer les produits
 $products = [
-    new Product(1, "Laptop Dell", "Ordinateur portable 15 pouces", 899.99, 5, $cat1->nom),
-    new Product(2, "Souris Logitech", "Souris sans fil précise", 35.50, 20, $cat2->nom),
-    new Product(3, "Clavier Mécanique", "Clavier RGB rétroéclairé", 129.99, 8, $cat2->nom)
+    new Product(1, 'Laptop Dell', 'Ordinateur portable 15 pouces', 899.99, 5, $cat1->nom),
+    new Product(2, 'Souris Logitech', 'Souris sans fil précise', 35.50, 20, $cat2->nom),
+    new Product(3, 'Clavier Mécanique', 'Clavier RGB rétroéclairé', 129.99, 8, $cat2->nom)
 ];
 
 // Créer les utilisateurs
 $users = [
-    new User("Jean Dupont", "jean@example.com", "password123"),
-    new User("Marie Martin", "marie@example.com", "secure456", "2025-12-15 10:30:00"),
-    new User("Pierre Durand", "pierre@example.com", "azerty789", "2024-01-20 14:45:00")
+    new User('Jean Dupont', 'jean@example.com', 'password123'),
+    new User('Marie Martin', 'marie@example.com', 'secure456', '2025-12-15 10:30:00'),
+    new User('Pierre Durand', 'pierre@example.com', 'azerty789', '2024-01-20 14:45:00')
 ];
 
 // Tableau de mots de passe pour tester la vérification
 $passwordsToTest = [
-    "password123",
-    "secure456",
-    "y789"
+    'password123',
+    'secure456',
+    'y789'
 ];
 
 ?>

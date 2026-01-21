@@ -1,5 +1,5 @@
 <?php
-$firstnames = ["Romain", "Roman", "Romane", "Roumane", "Ronin"];
+$firstnames = ['Romain', 'Roman', 'Romane', 'Roumane', 'Ronin'];
 $i = 1;
 ?>
 <!doctype html>

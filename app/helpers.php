@@ -17,7 +17,12 @@ function flash(string $key, ?string $message = null): ?string
     unset($_SESSION['_flash'][$key]);
     return $msg;
 }
-
+/**
+ * @param array{
+ *     price?: float,
+ *     currency?: string
+ * } $data
+ */
 function view(string $template, array $data = []): void
 {
     extract($data);

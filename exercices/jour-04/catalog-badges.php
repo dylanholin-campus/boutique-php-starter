@@ -2,68 +2,68 @@
 // Enrichissement des données pour l'exercice (ajout de 'new' et 'discount')
 $products = [
     [
-        "name" => "RTX 5090",
-        "price" => 1999.99,
-        "stock" => 0,
-        "new" => true,
-        "discount" => 0,
-        "image" => "https://placehold.co/200x150?text=GPU"
+        'name' => 'RTX 5090',
+        'price' => 1999.99,
+        'stock' => 0,
+        'new' => true,
+        'discount' => 0,
+        'image' => 'https://placehold.co/200x150?text=GPU'
     ],
     [
-        "name" => "Clavier Mécanique",
-        "price" => 149.50,
-        "stock" => 12,
-        "new" => false,
-        "discount" => 20, // 20%
-        "image" => "https://placehold.co/200x150?text=Clavier"
+        'name' => 'Clavier Mécanique',
+        'price' => 149.50,
+        'stock' => 12,
+        'new' => false,
+        'discount' => 20, // 20%
+        'image' => 'https://placehold.co/200x150?text=Clavier'
     ],
     [
-        "name" => "Écran 4K OLED",
-        "price" => 899.00,
-        "stock" => 3,
-        "new" => false,
-        "discount" => 0,
-        "image" => "https://placehold.co/200x150?text=Ecran"
+        'name' => 'Écran 4K OLED',
+        'price' => 899.00,
+        'stock' => 3,
+        'new' => false,
+        'discount' => 0,
+        'image' => 'https://placehold.co/200x150?text=Ecran'
     ],
     [
-        "name" => "Souris Gaming",
-        "price" => 59.90,
-        "stock" => 25,
-        "new" => true,
-        "discount" => 10,
-        "image" => "https://placehold.co/200x150?text=Souris"
+        'name' => 'Souris Gaming',
+        'price' => 59.90,
+        'stock' => 25,
+        'new' => true,
+        'discount' => 10,
+        'image' => 'https://placehold.co/200x150?text=Souris'
     ],
     [
-        "name" => "Casque Audio",
-        "price" => 199.99,
-        "stock" => 0,
-        "new" => false,
-        "discount" => 50,
-        "image" => "https://placehold.co/200x150?text=Casque"
+        'name' => 'Casque Audio',
+        'price' => 199.99,
+        'stock' => 0,
+        'new' => false,
+        'discount' => 50,
+        'image' => 'https://placehold.co/200x150?text=Casque'
     ],
     [
-        "name" => "Support Laptop",
-        "price" => 39.99,
-        "stock" => 10,
-        "new" => false,
-        "discount" => 0,
-        "image" => "https://placehold.co/200x150?text=Support"
+        'name' => 'Support Laptop',
+        'price' => 39.99,
+        'stock' => 10,
+        'new' => false,
+        'discount' => 0,
+        'image' => 'https://placehold.co/200x150?text=Support'
     ],
     [
-        "name" => "Câble HDMI 2.1",
-        "price" => 15.00,
-        "stock" => 100,
-        "new" => false,
-        "discount" => 5,
-        "image" => "https://placehold.co/200x150?text=Cable"
+        'name' => 'Câble HDMI 2.1',
+        'price' => 15.00,
+        'stock' => 100,
+        'new' => false,
+        'discount' => 5,
+        'image' => 'https://placehold.co/200x150?text=Cable'
     ],
     [
-        "name" => "Webcam 1080p",
-        "price" => 75.50,
-        "stock" => 8,
-        "new" => true,
-        "discount" => 0,
-        "image" => "https://placehold.co/200x150?text=Webcam"
+        'name' => 'Webcam 1080p',
+        'price' => 75.50,
+        'stock' => 8,
+        'new' => true,
+        'discount' => 0,
+        'image' => 'https://placehold.co/200x150?text=Webcam'
     ],
 ];
 

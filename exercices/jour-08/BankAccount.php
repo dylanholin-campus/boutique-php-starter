@@ -1,12 +1,16 @@
 <?php
-class BankAccount {
+
+class BankAccount
+{
     private $balance;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->balance = 0;
     }
 
-    public function deposit($amount) {
+    public function deposit($amount)
+    {
         if ($amount <= 0) {
             echo "Erreur : le montant doit être positif.\n";
             return;
@@ -15,7 +19,8 @@ class BankAccount {
         echo "Dépôt de $amount effectué.\n";
     }
 
-    public function withdraw($amount) {
+    public function withdraw($amount)
+    {
         if ($amount <= 0) {
             echo "Erreur : le montant doit être positif.\n";
             return;
@@ -28,7 +33,8 @@ class BankAccount {
         echo "Retrait de $amount effectué.\n";
     }
 
-    public function getBalance() {
+    public function getBalance()
+    {
         return $this->balance;
     }
 }
@@ -36,6 +42,5 @@ class BankAccount {
 $compte = new BankAccount();
 $compte->deposit(100);
 $compte->withdraw(30);
-echo "Solde actuel : " . $compte->getBalance() . "\n";
+echo 'Solde actuel : ' . $compte->getBalance() . "\n";
 $compte->withdraw(80); // Cette opération ne fonctionne pas ( volontairement )
-?>
