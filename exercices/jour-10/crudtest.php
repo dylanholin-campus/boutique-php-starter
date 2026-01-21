@@ -8,7 +8,7 @@ class ProductRepository
     {
         $stmt = $this->pdo->prepare("SELECT id, name, price FROM products WHERE id = :id");
         $stmt->execute(['id' => $id]);
-        $row = $stmt->fetch(); 
+        $row = $stmt->fetch();
         return $row === false ? null : $row;
     }
 
@@ -27,11 +27,19 @@ class ProductRepository
 
     public function update(int $id, string $name, float $price): bool
     {
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $stmt = $this->pdo->prepare(
-            "UPDATE products SET name = :name, price = :price WHERE id = :id"
+            "UPDATE products SET name = ?, price = ? WHERE id = ?"
         );
-        $stmt->execute(['id' => $id, 'name' => $name, 'price' => $price]);
-
+        //var_dump($stmt);
+        $result = $stmt->execute([$name, $price, $id]);
+        //echo "$name";
+        //var_dump($this->pdo->errorInfo());
+        if ($result) {
+            echo "vrai";
+        } else {
+            echo "faux";
+        }
         return $stmt->rowCount() > 0;         // rowCount = nb de lignes affectées par UPDATE/DELETE/INSERT
     }
 
@@ -69,7 +77,7 @@ show("Après save() (id = $newId)", $repo->find($newId));
 $repo->update($newId, "Produit test MODIF", 19.99); // Modifier
 show("Après update()", $repo->find($newId));
 
-$repo->delete($newId); // Supprimer
-show("Après delete() => find(id) doit être null", $repo->find($newId));
+//$repo->delete($newId); // Supprimer
+//show("Après delete() => find(id) doit être null", $repo->find($newId));
 
 show("findAll()", $repo->findAll()); // voir tout
