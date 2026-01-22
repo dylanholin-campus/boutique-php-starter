@@ -37,3 +37,43 @@ Si vous n'arrivez pas a créer votre base de données, vous pouvez :
 ```bash
 mysql -u root -p < config/database.sql
 ```
+
+## Tableau comparatif : Copilot vs PHPStan vs Rector vs Pint
+
+### 🎯 Vue d'ensemble
+
+| Outil | Fonction principale | Automatisable | Type d'entrée |
+|-------|-------------------|:-------------:|---------------|
+| **Copilot** | Suggestions IA intelligentes | ❌ Non | Questions, contexte |
+| **PHPStan** | Analyse statique & détection d'erreurs | ✅ Oui | Code source |
+| **Rector** | Refactorisation & modernisation auto | ✅ Oui | Code source |
+| **Pint** | Formatage & style de code | ✅ Oui | Code source |
+
+### 📊 Comparaison détaillée
+
+#### Détection & Correction
+- **Copilot** : Détecte les erreurs logiques, propose des solutions contextuelles
+- **PHPStan** : Détecte les erreurs de typage, variables non définies, erreurs statiques
+- **Rector** : Corrige automatiquement les patterns de code obsolètes
+- **Pint** : Corrige le style et la formatage (indentation, espaces, etc.)
+
+#### Exécution
+- **Copilot** : Manuel (demandes utilisateur)
+- **PHPStan** : `phpstan analyse` - rapide
+- **Rector** : `rector process` - rapide avec aperçu avant application
+- **Pint** : `pint` - très rapide
+
+#### Fiabilité
+- **Copilot** : ⚠️ Peut inventer du code (hallucinations)
+- **PHPStan** : ✅ 100% déterministe et fiable
+- **Rector** : ✅ 100% automatique et testable
+- **Pint** : ✅ 100% cohérent avec PSR-12
+
+### 🚀 Quand utiliser quoi ?
+
+```
+✏️ En développement → Copilot (idées, suggestions, explications)
+🔍 Avant commit → PHPStan (vérifier la qualité du code)
+🔧 Modernisation → Rector (mettre à jour le code)
+🎨 Format final → Pint (uniformiser le style)
+```
